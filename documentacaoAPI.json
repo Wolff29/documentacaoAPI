@@ -1,0 +1,2582 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "CorpAPI",
+    "description": "API para autenticação de usuários e gerenciamento de sessões.",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "Autenticação",
+      "description": "Endpoints para gerenciar autenticação de usuários"
+    },
+    {
+      "name": "Documentos/Produção",
+      "description": "Endpoints para gerenciar documentos e processos de produção"
+    },
+    {
+      "name": "Cliente",
+      "description": "Endpoints para gerenciar informações dos clientes"
+    },
+    {
+      "name": "Endereço",
+      "description": "Endpoints para gerenciar endereços de clientes ou associados"
+    },
+    {
+      "name": "Email",
+      "description": "Endpoints para gerenciar emails dos clientes ou usuários"
+    },
+    {
+      "name": "Telefone",
+      "description": "Endpoints para gerenciar telefones de clientes ou associados"
+    },
+    {
+      "name": "Negociações",
+      "description": "Endpoints para gerenciar e consultar negociações em andamento ou finalizadas"
+    },
+    {
+      "name": "Produtores",
+      "description": "Endpoints para gerenciar informações sobre os produtores"
+    },
+    {
+      "name": "Ramos",
+      "description": "Endpoints para gerenciar ramos de seguro ou outros produtos"
+    },
+    {
+      "name": "Sinistro",
+      "description": "Endpoints para gerenciar sinistros e suas informações"
+    },
+    {
+      "name": "BI",
+      "description": "Endpoints para gerenciar informações de BI (Business Intelligence)"
+    }
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "summary": "Autenticação do usuário",
+        "description": "Realiza o login de um usuário na aplicação.",
+        "tags": [
+          "Autenticação"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "O e-mail do usuário.",
+                    "example": "emailaqui"
+                  },
+                  "senha": {
+                    "type": "string",
+                    "description": "A senha do usuário.",
+                    "example": "senhaaqui"
+                  },
+                  "aplicacao": {
+                    "type": "integer",
+                    "description": "Identificador da aplicação.",
+                    "example": 0
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login bem-sucedido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "description": "O token gerado após o login.",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoidXN1YXJpby5jb20ifQ.AZdPoGht7vcMw3IQZtGSF4FVs8DjHgEGO1ofA_1lS-c"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Dados inválidos"
+          },
+          "401": {
+            "description": "Não autorizado"
+          }
+        }
+      }
+    },
+    "/logout": {
+      "post": {
+        "summary": "Logout do usuário",
+        "description": "Realiza o logout de um usuário, invalidando a sessão.",
+        "tags": [
+          "Autenticação"
+        ],
+        "requestBody": {
+          "required": false
+        },
+        "headers": {
+          "Authorization": {
+            "description": "Token de autenticação do usuário",
+            "schema": {
+              "type": "string",
+              "example": "{{token_auth}}"
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Logout bem-sucedido"
+          },
+          "400": {
+            "description": "Dados inválidos"
+          },
+          "401": {
+            "description": "Não autorizado, token inválido ou expirado."
+          }
+        }
+      }
+    },
+    "/documento": {
+      "get": {
+        "summary": "Consultar documento",
+        "description": "Retorna detalhes de um documento com base no código da filial e no número do documento.",
+        "tags": [
+          "Documentos/Produção"
+        ],
+        "parameters": [
+          {
+            "name": "codfil",
+            "in": "query",
+            "required": true,
+            "description": "Código da filial.",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "nosnum",
+            "in": "query",
+            "required": false,
+            "description": "Código do documento.",
+            "schema": {
+              "type": "string",
+              "example": "123456"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Documento encontrado"
+          },
+          "400": {
+            "description": "Solicitação inválida"
+          },
+          "404": {
+            "description": "Documento não encontrado"
+          }
+        }
+      }
+    },
+    "/producao": {
+      "get": {
+        "summary": "Consultar produção",
+        "description": "Retorna detalhes da produção com base nos parâmetros fornecidos.",
+        "tags": [
+          "Documentos/Produção"
+        ],
+        "parameters": [
+          {
+            "name": "texto",
+            "in": "query",
+            "required": false,
+            "description": "Busca por texto genérico (nome, e-mail, etc.).",
+            "schema": {
+              "type": "string",
+              "example": "BuscaProdução"
+            }
+          },
+          {
+            "name": "dt_ini",
+            "in": "query",
+            "required": true,
+            "description": "Data inicial para o filtro de produção.",
+            "schema": {
+              "type": "string",
+              "example": "22/02/2022"
+            }
+          },
+          {
+            "name": "dt_fim",
+            "in": "query",
+            "required": true,
+            "description": "Data final para o filtro de produção.",
+            "schema": {
+              "type": "string",
+              "example": "22/02/2022"
+            }
+          },
+          {
+            "name": "ordem",
+            "in": "query",
+            "required": false,
+            "description": "Ordem de ordenação dos registros.",
+            "schema": {
+              "type": "string",
+              "example": "inivig"
+            }
+          },
+          {
+            "name": "orientacao",
+            "in": "query",
+            "required": false,
+            "description": "Orientação de ordenação (ascendente ou descendente).",
+            "schema": {
+              "type": "string",
+              "example": "asc"
+            }
+          },
+          {
+            "name": "so_renovados",
+            "in": "query",
+            "required": false,
+            "description": "Filtra apenas os renovados (T - true, F - false, X - todos).",
+            "schema": {
+              "type": "string",
+              "example": "t"
+            }
+          },
+          {
+            "name": "so_emitidos",
+            "in": "query",
+            "required": false,
+            "description": "Filtra apenas os emitidos (T - true, F - false, X - todos).",
+            "schema": {
+              "type": "string",
+              "example": "x"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Produção encontrada"
+          },
+          "400": {
+            "description": "Solicitação inválida"
+          },
+          "404": {
+            "description": "Produção não encontrada"
+          }
+        }
+      }
+    },
+    "/renovacoes": {
+      "get": {
+        "summary": "Consultar renovações",
+        "description": "Retorna detalhes das renovações com base nos parâmetros fornecidos.",
+        "tags": [
+          "Documentos/Produção"
+        ],
+        "parameters": [
+          {
+            "name": "dt_ini",
+            "in": "query",
+            "required": true,
+            "description": "Data inicial para o filtro de renovações.",
+            "schema": {
+              "type": "string",
+              "example": "01/09/2023"
+            }
+          },
+          {
+            "name": "dt_fim",
+            "in": "query",
+            "required": true,
+            "description": "Data final para o filtro de renovações.",
+            "schema": {
+              "type": "string",
+              "example": "30/09/2023"
+            }
+          },
+          {
+            "name": "qtd_pag",
+            "in": "query",
+            "required": false,
+            "description": "Quantidade de registros por página.",
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          },
+          {
+            "name": "pag",
+            "in": "query",
+            "required": false,
+            "description": "Número da página para paginação.",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "ordem",
+            "in": "query",
+            "required": false,
+            "description": "Campo para ordenar os resultados.",
+            "schema": {
+              "type": "string",
+              "example": "nosnum"
+            }
+          },
+          {
+            "name": "orientacao",
+            "in": "query",
+            "required": false,
+            "description": "Orientação para ordenação dos registros (ascendente ou descendente).",
+            "schema": {
+              "type": "string",
+              "example": "asc"
+            }
+          },
+          {
+            "name": "texto",
+            "in": "query",
+            "required": false,
+            "description": "Texto para busca.",
+            "schema": {
+              "type": "string",
+              "example": "Renovação"
+            }
+          },
+          {
+            "name": "cancelado",
+            "in": "query",
+            "required": false,
+            "description": "Filtra renovações canceladas (T - true, F - false).",
+            "schema": {
+              "type": "string",
+              "example": "F"
+            }
+          },
+          {
+            "name": "resgates",
+            "in": "query",
+            "required": false,
+            "description": "Filtra renovações com resgates (T - true, F - false).",
+            "schema": {
+              "type": "string",
+              "example": "F"
+            }
+          },
+          {
+            "name": "codcli",
+            "in": "query",
+            "required": true,
+            "description": "Código do cliente.",
+            "schema": {
+              "type": "integer",
+              "example": 1988
+            }
+          },
+          {
+            "name": "codram",
+            "in": "query",
+            "required": true,
+            "description": "Código do ramo de seguro.",
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          },
+          {
+            "name": "codcia",
+            "in": "query",
+            "required": true,
+            "description": "Código da seguradora.",
+            "schema": {
+              "type": "integer",
+              "example": 19
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Renovações encontradas"
+          },
+          "400": {
+            "description": "Solicitação inválida"
+          },
+          "404": {
+            "description": "Renovações não encontradas"
+          }
+        }
+      }
+    },
+    "/documentos": {
+      "get": {
+        "summary": "Consultar documentos",
+        "description": "Retorna documentos com base em um período e código da filial.",
+        "tags": [
+          "Documentos/Produção"
+        ],
+        "parameters": [
+          {
+            "name": "periodo",
+            "in": "query",
+            "required": true,
+            "description": "Período de busca dos documentos (datinc, etc).",
+            "schema": {
+              "type": "string",
+              "example": "datinc"
+            }
+          },
+          {
+            "name": "datini",
+            "in": "query",
+            "required": true,
+            "description": "Data inicial para o filtro de documentos.",
+            "schema": {
+              "type": "string",
+              "example": "13/03/2025"
+            }
+          },
+          {
+            "name": "datfim",
+            "in": "query",
+            "required": true,
+            "description": "Data final para o filtro de documentos.",
+            "schema": {
+              "type": "string",
+              "example": "13/03/2025"
+            }
+          },
+          {
+            "name": "codfil",
+            "in": "query",
+            "required": true,
+            "description": "Código da filial.",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "texto",
+            "in": "query",
+            "required": false,
+            "description": "Texto para busca.",
+            "schema": {
+              "type": "string",
+              "example": "JBR7I13"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Documentos encontrados"
+          },
+          "400": {
+            "description": "Solicitação inválida"
+          },
+          "404": {
+            "description": "Documentos não encontrados"
+          }
+        }
+      }
+    },
+    "/documento_anexos": {
+      "get": {
+        "summary": "Consultar anexos de documento",
+        "description": "Retorna os anexos de um documento específico com base no código da filial e no número do documento.",
+        "tags": [
+          "Documentos/Produção"
+        ],
+        "parameters": [
+          {
+            "name": "codfil",
+            "in": "query",
+            "required": true,
+            "description": "Código da filial.",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "nosnum",
+            "in": "query",
+            "required": true,
+            "description": "Número do documento.",
+            "schema": {
+              "type": "integer",
+              "example": 525458
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Anexos encontrados"
+          },
+          "400": {
+            "description": "Solicitação inválida"
+          },
+          "404": {
+            "description": "Anexos não encontrados"
+          }
+        }
+      }
+    },
+    "/documento_endossos": {
+      "get": {
+        "summary": "Consultar endossos de documento",
+        "description": "Retorna os endossos de um documento específico com base no código da filial e no número do documento.",
+        "tags": [
+          "Documentos/Produção"
+        ],
+        "parameters": [
+          {
+            "name": "codfil",
+            "in": "query",
+            "required": true,
+            "description": "Código da filial.",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "nosnum",
+            "in": "query",
+            "required": true,
+            "description": "Número do documento.",
+            "schema": {
+              "type": "integer",
+              "example": 26397
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Endossos encontrados"
+          },
+          "400": {
+            "description": "Solicitação inválida"
+          },
+          "404": {
+            "description": "Endossos não encontrados"
+          }
+        }
+      }
+    },
+    "/cliente": {
+      "get": {
+        "summary": "Obter informações de um cliente",
+        "tags": [
+          "Cliente"
+        ],
+        "parameters": [
+          {
+            "name": "codfil",
+            "in": "query",
+            "description": "Código de filial",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "codigo",
+            "in": "query",
+            "description": "Código do cliente",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 150
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cliente encontrado"
+          }
+        }
+      },
+      "post": {
+        "summary": "Inserir um novo cliente",
+        "description": "Inserção de um novo cliente, incluindo dados de endereços, e-mails e telefones.",
+        "tags": [
+          "Cliente"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "codfil": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "nome": {
+                    "type": "string",
+                    "example": "teste"
+                  },
+                  "ativo": {
+                    "type": "string",
+                    "example": "F"
+                  },
+                  "cpf_cnpj": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": null
+                  },
+                  "datanas": {
+                    "type": "string",
+                    "format": "date",
+                    "example": "04/05/1915"
+                  },
+                  "pessoa": {
+                    "type": "string",
+                    "example": "F"
+                  },
+                  "sexo": {
+                    "type": "string",
+                    "example": "M"
+                  },
+                  "observacoes": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "enderecos": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "tipo": {
+                          "type": "string"
+                        },
+                        "logradouro": {
+                          "type": "string"
+                        },
+                        "numero": {
+                          "type": "integer"
+                        },
+                        "complemento": {
+                          "type": "string"
+                        },
+                        "bairro": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "cep": {
+                          "type": "integer"
+                        },
+                        "padrao": {
+                          "type": "string"
+                        },
+                        "cidade": {
+                          "type": "string"
+                        },
+                        "estado": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "emails": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string"
+                        },
+                        "padrao": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "telefones": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "tipo": {
+                          "type": "string"
+                        },
+                        "ddd": {
+                          "type": "integer"
+                        },
+                        "numero": {
+                          "type": "string"
+                        },
+                        "ramal": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "padrao": {
+                          "type": "string"
+                        },
+                        "codcon": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "codemp": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Cliente inserido com sucesso"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Excluir um cliente",
+        "tags": [
+          "Cliente"
+        ],
+        "parameters": [
+          {
+            "name": "codfil",
+            "in": "query",
+            "description": "Código de filial",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "codigo",
+            "in": "query",
+            "description": "Código do cliente",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 150
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cliente excluído com sucesso"
+          }
+        }
+      }
+    },
+    "/clientes": {
+      "get": {
+        "summary": "Obter lista de clientes",
+        "tags": [
+          "Cliente"
+        ],
+        "parameters": [
+          {
+            "name": "datini",
+            "in": "query",
+            "description": "Data de início",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "datfim",
+            "in": "query",
+            "description": "Data de fim",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "texto",
+            "in": "query",
+            "description": "Texto de busca",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "qtd_pag",
+            "in": "query",
+            "description": "Quantidade de itens por página",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          },
+          {
+            "name": "pag",
+            "in": "query",
+            "description": "Página de resultados",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "ordem",
+            "in": "query",
+            "description": "Ordenação",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "codigo"
+            }
+          },
+          {
+            "name": "orientacao",
+            "in": "query",
+            "description": "Orientação da ordenação",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "desc"
+            }
+          },
+          {
+            "name": "inativo",
+            "in": "query",
+            "description": "Incluir clientes inativos",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "example": false
+            }
+          },
+          {
+            "name": "vigentes",
+            "in": "query",
+            "description": "Seleção de clientes vigentes",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "all"
+            }
+          },
+          {
+            "name": "periodo",
+            "in": "query",
+            "description": "Período de data",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "datinc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de clientes"
+          }
+        }
+      }
+    },
+    "/cliente_cpf": {
+      "get": {
+        "summary": "Obter cliente por CPF ou CNPJ",
+        "tags": [
+          "Cliente"
+        ],
+        "parameters": [
+          {
+            "name": "codfil",
+            "in": "query",
+            "description": "Código de filial",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "cpf_cnpj",
+            "in": "query",
+            "description": "CPF ou CNPJ do cliente",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "04030167039"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cliente encontrado"
+          }
+        }
+      }
+    },
+    "/cliente_anexos": {
+      "get": {
+        "summary": "Obter anexos de um cliente",
+        "tags": [
+          "Cliente"
+        ],
+        "parameters": [
+          {
+            "name": "codfil",
+            "in": "query",
+            "description": "Código de filial",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "codigo",
+            "in": "query",
+            "description": "Código do cliente",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "3680x"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Anexos do cliente encontrados"
+          }
+        }
+      }
+    },
+    "/lista_clientes": {
+      "get": {
+        "summary": "Obter lista de clientes com filtro por nome",
+        "tags": [
+          "Cliente"
+        ],
+        "parameters": [
+          {
+            "name": "texto",
+            "in": "query",
+            "description": "Nome do cliente",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "leonardo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de clientes com base no filtro"
+          }
+        }
+      }
+    },
+    "/busca_cpf": {
+      "get": {
+        "summary": "Buscar cliente por CPF",
+        "tags": [
+          "Cliente"
+        ],
+        "parameters": [
+          {
+            "name": "cpf_cnpj",
+            "in": "query",
+            "description": "CPF ou CNPJ do cliente",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "04030167039"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cliente encontrado"
+          }
+        }
+      }
+    },
+    "/endereco": {
+      "post": {
+        "summary": "Criar um novo endereço",
+        "tags": [
+          "Endereço"
+        ],
+        "description": "Cria um novo endereço para um cliente.",
+        "operationId": "criarEndereco",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "codcli": {
+                    "type": "integer",
+                    "example": 123
+                  },
+                  "logradouro": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "numero": {
+                    "type": "integer",
+                    "example": 123
+                  },
+                  "complemento": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "bairro": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "cep": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "cidade": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "estado": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "tipo": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "padrao": {
+                    "type": "string",
+                    "example": "T"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Endereço criado com sucesso"
+          },
+          "400": {
+            "description": "Solicitação mal formada"
+          },
+          "401": {
+            "description": "Não autorizado"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar um endereço existente",
+        "tags": [
+          "Endereço"
+        ],
+        "description": "Atualiza um endereço já existente de um cliente.",
+        "operationId": "atualizarEndereco",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "codigo": {
+                    "type": "integer",
+                    "example": 123
+                  },
+                  "codcli": {
+                    "type": "integer",
+                    "example": 123
+                  },
+                  "tipo": {
+                    "type": "string",
+                    "example": "R"
+                  },
+                  "logradouro": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "numero": {
+                    "type": "integer",
+                    "example": 0
+                  },
+                  "complemento": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "bairro": {
+                    "type": "string",
+                    "example": null
+                  },
+                  "cep": {
+                    "type": "integer",
+                    "example": 93510100
+                  },
+                  "padrao": {
+                    "type": "string",
+                    "example": "F"
+                  },
+                  "cidade": {
+                    "type": "string",
+                    "example": "NOVO HAMBURGO"
+                  },
+                  "estado": {
+                    "type": "string",
+                    "example": "RS"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Endereço atualizado com sucesso"
+          },
+          "400": {
+            "description": "Solicitação mal formada"
+          },
+          "401": {
+            "description": "Não autorizado"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletar um endereço",
+        "description": "Remove um endereço de um cliente.",
+        "tags": [
+          "Endereço"
+        ],
+        "operationId": "deletarEndereco",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "codigo",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 123
+            },
+            "description": "Código do endereço a ser deletado"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Endereço deletado com sucesso"
+          },
+          "400": {
+            "description": "Solicitação mal formada"
+          },
+          "401": {
+            "description": "Não autorizado"
+          }
+        }
+      }
+    },
+    "/email": {
+      "post": {
+        "summary": "Criar um novo e-mail",
+        "description": "Adiciona um novo e-mail a um cliente.",
+        "tags": [
+          "Email"
+        ],
+        "operationId": "criarEmail",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "codcli": {
+                    "type": "integer",
+                    "example": 123
+                  },
+                  "padrao": {
+                    "type": "string",
+                    "example": "T"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "teste@gmail.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "E-mail criado com sucesso"
+          },
+          "400": {
+            "description": "Solicitação mal formada"
+          },
+          "401": {
+            "description": "Não autorizado"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar um e-mail existente",
+        "description": "Atualiza o e-mail de um cliente.",
+        "tags": [
+          "Email"
+        ],
+        "operationId": "atualizarEmail",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "codigo": {
+                    "type": "integer",
+                    "example": 123
+                  },
+                  "codcli": {
+                    "type": "integer",
+                    "example": 123
+                  },
+                  "padrao": {
+                    "type": "string",
+                    "example": "f"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "teste@gmail.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "E-mail atualizado com sucesso"
+          },
+          "400": {
+            "description": "Solicitação mal formada"
+          },
+          "401": {
+            "description": "Não autorizado"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletar um e-mail",
+        "description": "Remove o e-mail de um cliente.",
+        "tags": [
+          "Email"
+        ],
+        "operationId": "deletarEmail",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "codigo",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 2355
+            },
+            "description": "Código do e-mail a ser deletado"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "E-mail deletado com sucesso"
+          },
+          "400": {
+            "description": "Solicitação mal formada"
+          },
+          "401": {
+            "description": "Não autorizado"
+          }
+        }
+      }
+    },
+    "/telefone": {
+      "post": {
+        "summary": "Adicionar um novo telefone",
+        "description": "Adiciona um novo telefone a um cliente.",
+        "tags": [
+          "Telefone"
+        ],
+        "operationId": "adicionarTelefone",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "codcli": {
+                    "type": "integer",
+                    "example": 123
+                  },
+                  "tipo": {
+                    "type": "string",
+                    "example": "C"
+                  },
+                  "ddd": {
+                    "type": "integer",
+                    "example": 51
+                  },
+                  "numero": {
+                    "type": "string",
+                    "example": "35561006"
+                  },
+                  "padrao": {
+                    "type": "string",
+                    "example": "T"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Telefone adicionado com sucesso"
+          },
+          "400": {
+            "description": "Solicitação mal formada"
+          },
+          "401": {
+            "description": "Não autorizado"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar um telefone existente",
+        "description": "Atualiza o telefone de um cliente.",
+        "tags": [
+          "Telefone"
+        ],
+        "operationId": "atualizarTelefone",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "codigo": {
+                    "type": "integer",
+                    "example": 123
+                  },
+                  "codcli": {
+                    "type": "integer",
+                    "example": 123
+                  },
+                  "tipo": {
+                    "type": "string",
+                    "example": "E"
+                  },
+                  "ddd": {
+                    "type": "integer",
+                    "example": 51
+                  },
+                  "numero": {
+                    "type": "string",
+                    "example": "35561006"
+                  },
+                  "padrao": {
+                    "type": "string",
+                    "example": "F"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Telefone atualizado com sucesso"
+          },
+          "400": {
+            "description": "Solicitação mal formada"
+          },
+          "401": {
+            "description": "Não autorizado"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletar um telefone",
+        "description": "Remove o telefone de um cliente.",
+        "tags": [
+          "Telefone"
+        ],
+        "operationId": "deletarTelefone",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "codigo",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 123
+            },
+            "description": "Código do telefone a ser deletado"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Telefone deletado com sucesso"
+          },
+          "400": {
+            "description": "Solicitação mal formada"
+          },
+          "401": {
+            "description": "Não autorizado"
+          }
+        }
+      }
+    },
+    "/negocios_andamento": {
+      "get": {
+        "summary": "Lista os negócios em andamento",
+        "description": "Recupera todos os negócios em andamento com filtros de data, texto, status e outros parâmetros.",
+        "tags": [
+          "Negociações"
+        ],
+        "parameters": [
+          {
+            "name": "dtini",
+            "in": "query",
+            "description": "Data inicial para filtro",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dtfim",
+            "in": "query",
+            "description": "Data final para filtro",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "texto",
+            "in": "query",
+            "description": "Texto para busca",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "qtd_pag",
+            "in": "query",
+            "description": "Quantidade por página",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          },
+          {
+            "name": "pag",
+            "in": "query",
+            "description": "Página de resultados",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "ordem",
+            "in": "query",
+            "description": "Ordenação dos resultados",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "codigo"
+            }
+          },
+          {
+            "name": "orientacao",
+            "in": "query",
+            "description": "Orientação da ordenação",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "desc"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filtro de status (all, atrasadas, etc.)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "all"
+            }
+          },
+          {
+            "name": "calculo",
+            "in": "query",
+            "description": "Calculo de negócios",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "t"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso ao retornar os negócios em andamento",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "codigo": {
+                        "type": "integer"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "dtini": {
+                        "type": "string"
+                      },
+                      "dtfim": {
+                        "type": "string"
+                      },
+                      "texto": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida"
+          },
+          "401": {
+            "description": "Não autorizado"
+          }
+        }
+      }
+    },
+    "/negocios_em_calculo": {
+      "get": {
+        "summary": "Lista os negócios em cálculo",
+        "description": "Recupera negócios em cálculo com filtros como data, texto, status e mais.",
+        "tags": [
+          "Negociações"
+        ],
+        "parameters": [
+          {
+            "name": "dtini",
+            "in": "query",
+            "description": "Data inicial para filtro",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "01/01/2010"
+            }
+          },
+          {
+            "name": "dtfim",
+            "in": "query",
+            "description": "Data final para filtro",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "31/12/2023"
+            }
+          },
+          {
+            "name": "texto",
+            "in": "query",
+            "description": "Texto para busca",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "joaoas"
+            }
+          },
+          {
+            "name": "qtd_pag",
+            "in": "query",
+            "description": "Quantidade por página",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 15
+            }
+          },
+          {
+            "name": "pag",
+            "in": "query",
+            "description": "Página de resultados",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "ordem",
+            "in": "query",
+            "description": "Campo para ordenar os resultados",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "codigo"
+            }
+          },
+          {
+            "name": "orientacao",
+            "in": "query",
+            "description": "Orientação da ordenação (asc/desc)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "desc"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Status do negócio (TODOS, ATRASADAS)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "TODOS"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso ao retornar os negócios em cálculo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "codigo": {
+                        "type": "integer"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "dtini": {
+                        "type": "string"
+                      },
+                      "dtfim": {
+                        "type": "string"
+                      },
+                      "texto": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida"
+          },
+          "401": {
+            "description": "Não autorizado"
+          }
+        }
+      }
+    },
+    "/negocios_finalizados": {
+      "get": {
+        "summary": "Lista os negócios finalizados",
+        "description": "Recupera negócios que foram finalizados com filtros como data, texto, status e mais.",
+        "tags": [
+          "Negociações"
+        ],
+        "parameters": [
+          {
+            "name": "texto",
+            "in": "query",
+            "description": "Texto para busca",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pag",
+            "in": "query",
+            "description": "Página de resultados",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "ordem",
+            "in": "query",
+            "description": "Campo de ordenação",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "codcli"
+            }
+          },
+          {
+            "name": "orientacao",
+            "in": "query",
+            "description": "Orientação da ordenação (asc/desc)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "asc"
+            }
+          },
+          {
+            "name": "dtini",
+            "in": "query",
+            "description": "Data inicial para filtro",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "01/10/2023"
+            }
+          },
+          {
+            "name": "dtfim",
+            "in": "query",
+            "description": "Data final para filtro",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "31/10/2023"
+            }
+          },
+          {
+            "name": "qtd_pag",
+            "in": "query",
+            "description": "Quantidade por página",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filtro de status",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "all"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso ao retornar os negócios finalizados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "codigo": {
+                        "type": "integer"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "dtini": {
+                        "type": "string"
+                      },
+                      "dtfim": {
+                        "type": "string"
+                      },
+                      "texto": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida"
+          },
+          "401": {
+            "description": "Não autorizado"
+          }
+        }
+      }
+    },
+    "/negocio_anexos": {
+      "get": {
+        "summary": "Recupera anexos de um negócio",
+        "description": "Obtém anexos relacionados a um negócio específico.",
+        "tags": [
+          "Negociações"
+        ],
+        "parameters": [
+          {
+            "name": "codfil",
+            "in": "query",
+            "description": "Código da filial",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "codigo",
+            "in": "query",
+            "description": "Código do negócio",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 123
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso ao retornar os anexos do negócio",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "file_name": {
+                        "type": "string"
+                      },
+                      "file_type": {
+                        "type": "string"
+                      },
+                      "file_size": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida"
+          },
+          "401": {
+            "description": "Não autorizado"
+          }
+        }
+      }
+    },
+    "/negocio": {
+      "get": {
+        "summary": "Recupera dados de um negócio específico",
+        "description": "Obtém detalhes de um negócio pelo código.",
+        "tags": [
+          "Negociações"
+        ],
+        "parameters": [
+          {
+            "name": "codfil",
+            "in": "query",
+            "description": "Código da filial",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "codigo",
+            "in": "query",
+            "description": "Código do negócio",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 123
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso ao retornar o negócio",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "codigo": {
+                      "type": "integer"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "dtini": {
+                      "type": "string"
+                    },
+                    "dtfim": {
+                      "type": "string"
+                    },
+                    "texto": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida"
+          },
+          "401": {
+            "description": "Não autorizado"
+          }
+        }
+      },
+      "post": {
+        "summary": "Cria ou atualiza um negócio",
+        "description": "Envia dados para criar ou atualizar um negócio.",
+        "tags": [
+          "Negociações"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cpf_cnpj": {
+                    "type": "string"
+                  },
+                  "codram": {
+                    "type": "integer"
+                  },
+                  "ddd_fone": {
+                    "type": "string"
+                  },
+                  "numero_fone": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "produto_ja_possui": {
+                    "type": "string",
+                    "enum": [
+                      "F",
+                      "T"
+                    ]
+                  },
+                  "produto_fimvig": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "produto_seguradora": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "observacoes": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "val_premio": {
+                    "type": "number",
+                    "nullable": true
+                  },
+                  "usuinc": {
+                    "type": "string"
+                  },
+                  "datinc": {
+                    "type": "string",
+                    "example": "10/10/2023 16:15"
+                  },
+                  "usualt": {
+                    "type": "string"
+                  },
+                  "datalt": {
+                    "type": "string",
+                    "example": "10/10/2023"
+                  },
+                  "produto_codfil": {
+                    "type": "string"
+                  },
+                  "produto_nosnum": {
+                    "type": "string"
+                  },
+                  "produto_numapo": {
+                    "type": "string"
+                  },
+                  "prioridade": {
+                    "type": "integer"
+                  },
+                  "etapa": {
+                    "type": "integer"
+                  },
+                  "status": {
+                    "type": "integer"
+                  },
+                  "codcia": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "codcamp": {
+                    "type": "string"
+                  },
+                  "tipo": {
+                    "type": "integer"
+                  },
+                  "dtini_negociacao": {
+                    "type": "string"
+                  },
+                  "usuini_negociacao": {
+                    "type": "string"
+                  },
+                  "dtfim_negociacao": {
+                    "type": "string"
+                  },
+                  "usufim_negociacao": {
+                    "type": "string"
+                  },
+                  "codusu_responsavel": {
+                    "type": "string"
+                  },
+                  "codopo_rep": {
+                    "type": "string"
+                  },
+                  "doc_codfil": {
+                    "type": "string"
+                  },
+                  "doc_nosnum": {
+                    "type": "string"
+                  },
+                  "motivo_perda": {
+                    "type": "string"
+                  },
+                  "codfil": {
+                    "type": "integer"
+                  },
+                  "codcli": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Negócio criado ou atualizado com sucesso"
+          },
+          "400": {
+            "description": "Erro na criação ou atualização do negócio"
+          },
+          "401": {
+            "description": "Não autorizado"
+          }
+        }
+      }
+    },
+    "/agentes": {
+      "get": {
+        "tags": [
+          "Produtores"
+        ],
+        "summary": "Lista de agentes",
+        "description": "Obtém uma lista de agentes com base no texto fornecido.",
+        "parameters": [
+          {
+            "name": "texto",
+            "in": "query",
+            "description": "Texto que pode ser utilizado ou não",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de agentes",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/produtores": {
+      "get": {
+        "tags": [
+          "Produtores"
+        ],
+        "summary": "Consulta de produtores",
+        "description": "Consulta produtores com base nos parâmetros fornecidos.",
+        "parameters": [
+          {
+            "name": "texto",
+            "in": "query",
+            "description": "Texto que pode ser utilizado ou não para filtrar os produtores",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "codage",
+            "in": "query",
+            "description": "Código do agente",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de produtores encontrados",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/prod_docs": {
+      "get": {
+        "tags": [
+          "Produtores"
+        ],
+        "summary": "Consulta de documentos de produção",
+        "description": "Consulta documentos de produção com base nos parâmetros fornecidos.",
+        "parameters": [
+          {
+            "name": "codfil",
+            "in": "query",
+            "description": "Código da filial",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "nosnum",
+            "in": "query",
+            "description": "Código do documento",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Documentos encontrados",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Produtores"
+        ],
+        "summary": "Criação de documentos de produção",
+        "description": "Cria um novo documento de produção.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dados do documento de produção a ser criado",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "codfil": {
+                  "type": "integer"
+                },
+                "nosnum": {
+                  "type": "integer"
+                },
+                "codage": {
+                  "type": "integer"
+                },
+                "codpro": {
+                  "type": "integer"
+                },
+                "indireto": {
+                  "type": "string"
+                },
+                "perpart": {
+                  "type": "integer"
+                },
+                "campo_base_r": {
+                  "type": "integer"
+                },
+                "per_r": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "forma_repasse_r": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Documento de produção criado com sucesso"
+          },
+          "400": {
+            "description": "Erro na criação do documento"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Produtores"
+        ],
+        "summary": "Atualização de documentos de produção",
+        "description": "Atualiza um documento de produção existente.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dados do documento de produção a ser atualizado",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "codfil": {
+                  "type": "integer"
+                },
+                "nosnum": {
+                  "type": "integer"
+                },
+                "codage": {
+                  "type": "integer"
+                },
+                "codpro": {
+                  "type": "integer"
+                },
+                "codpro_novo": {
+                  "type": "integer"
+                },
+                "codage_novo": {
+                  "type": "integer"
+                },
+                "indireto": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Documento de produção atualizado com sucesso"
+          },
+          "400": {
+            "description": "Erro na atualização do documento"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Produtores"
+        ],
+        "summary": "Remover documento de produção",
+        "description": "Remove um documento de produção.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dados do documento de produção a ser removido",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "codfil": {
+                  "type": "integer"
+                },
+                "nosnum": {
+                  "type": "integer"
+                },
+                "codage": {
+                  "type": "integer"
+                },
+                "codpro": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Documento de produção removido com sucesso"
+          },
+          "400": {
+            "description": "Erro ao remover o documento"
+          }
+        }
+      }
+    },
+    "/ramos": {
+      "get": {
+        "tags": [
+          "Ramos"
+        ],
+        "summary": "Consulta de Ramos",
+        "description": "Obtém uma lista de todos os Ramos disponíveis.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Lista de Ramos encontrados",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lista_ramos": {
+      "get": {
+        "tags": [
+          "Ramos"
+        ],
+        "summary": "Consulta de Ramos por telefone",
+        "description": "Obtém uma lista de Ramos filtrados pelo número de telefone fornecido.",
+        "parameters": [
+          {
+            "name": "telram",
+            "in": "query",
+            "description": "Número de telefone para filtrar os Ramos",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de Ramos encontrados com base no telefone",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sinistros": {
+      "get": {
+        "tags": [
+          "Sinistro"
+        ],
+        "summary": "Consulta de Sinistros",
+        "description": "Obtém uma lista de sinistros com base nos filtros fornecidos.",
+        "parameters": [
+          {
+            "name": "tipo_sinistro",
+            "in": "query",
+            "description": "Tipo de sinistro (A, T, S)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "data_inicial",
+            "in": "query",
+            "description": "Data inicial do filtro (formato dd/MM/yyyy)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "data_final",
+            "in": "query",
+            "description": "Data final do filtro (formato dd/MM/yyyy)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "tipo_data",
+            "in": "query",
+            "description": "Tipo de data para filtro (AVI, ENC, MOD, OCO)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "situacao",
+            "in": "query",
+            "description": "Situação do sinistro (P, A, E, I, T)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "qtd_pag",
+            "in": "query",
+            "description": "Quantidade de registros por página",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "pagina",
+            "in": "query",
+            "description": "Número da página de resultados",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de sinistros encontrados",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "tipo_sinistro": {
+                    "type": "string"
+                  },
+                  "data_sinistro": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "situacao": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parâmetros de consulta inválidos"
+          },
+          "404": {
+            "description": "Sinistros não encontrados"
+          }
+        }
+      }
+    },
+    "/documentos_bi": {
+      "get": {
+        "tags": [
+          "BI"
+        ],
+        "summary": "Consulta de Documentos BI",
+        "description": "Obtém a lista de documentos BI com base nos filtros fornecidos.",
+        "parameters": [
+          {
+            "name": "datini",
+            "in": "query",
+            "description": "Data inicial do filtro (formato dd/MM/yyyy)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "datfim",
+            "in": "query",
+            "description": "Data final do filtro (formato dd/MM/yyyy)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "query",
+            "description": "Tipo de data para filtro (INIVIG, DATINC, DATALT, DATPRO)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "tipo_doc",
+            "in": "query",
+            "description": "Tipo de documento (A, TODOS)",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de documentos BI encontrados",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "tipo_doc": {
+                    "type": "string"
+                  },
+                  "data_doc": {
+                    "type": "string",
+                    "format": "date"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parâmetros de consulta inválidos"
+          },
+          "404": {
+            "description": "Documentos BI não encontrados"
+          }
+        }
+      }
+    }
+  }
+}
