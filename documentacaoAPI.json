@@ -51,16 +51,21 @@
       "description": "Endpoints para gerenciar informações de BI (Business Intelligence)"
     }
   ],
+  "servers": [
+    {
+      "url": "https://api.corpnuvem.com"
+    }
+  ],
   "paths": {
     "/login": {
       "post": {
-        "summary": "Autenticação do usuário",
-        "description": "Realiza o login de um usuário na aplicação.",
         "tags": [
           "Autenticação"
         ],
+        "summary": "Login de usuário",
+        "description": "Autentica um usuário e retorna um token de acesso.",
         "requestBody": {
-          "required": true,
+          "description": "Dados de login do usuário.",
           "content": {
             "application/json": {
               "schema": {
@@ -68,96 +73,334 @@
                 "properties": {
                   "email": {
                     "type": "string",
+                    "format": "email",
                     "description": "O e-mail do usuário.",
-                    "example": "emailaqui"
+                    "example": "usuario@exemplo.com"
                   },
                   "senha": {
                     "type": "string",
                     "description": "A senha do usuário.",
-                    "example": "senhaaqui"
-                  },
-                  "aplicacao": {
-                    "type": "integer",
-                    "description": "Identificador da aplicação.",
-                    "example": 0
+                    "example": "senha123"
                   }
-                }
+                },
+                "required": [
+                  "email",
+                  "senha"
+                ]
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Login bem-sucedido",
+            "description": "Login bem-sucedido. Retorna os dados do usuário e um token de acesso.",
+            "headers": {
+              "Authorization": {
+                "description": "Token de acesso JWT.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "codigo": {
+                      "type": "integer",
+                      "example": 11
+                    },
+                    "nome": {
+                      "type": "string",
+                      "example": "Sua corretora"
+                    },
+                    "login": {
+                      "type": "string",
+                      "example": "Sua corretora"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "contato@suacorretora.com.br"
+                    },
+                    "email_multi": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "codfil": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "p500": {
+                      "type": "string",
+                      "example": "T"
+                    },
+                    "p501": {
+                      "type": "string",
+                      "example": "T"
+                    },
+                    "p502": {
+                      "type": "string",
+                      "example": "T"
+                    },
+                    "p600": {
+                      "type": "string",
+                      "example": "T"
+                    },
+                    "p601": {
+                      "type": "string",
+                      "example": "T"
+                    },
+                    "p602": {
+                      "type": "string",
+                      "example": "T"
+                    },
+                    "p226": {
+                      "type": "string",
+                      "example": "T"
+                    },
+                    "p212": {
+                      "type": "string",
+                      "example": "T"
+                    },
+                    "p25": {
+                      "type": "string",
+                      "example": "T"
+                    },
+                    "p51": {
+                      "type": "string",
+                      "example": "T"
+                    },
+                    "p91": {
+                      "type": "string",
+                      "example": "T"
+                    },
+                    "p282": {
+                      "type": "string",
+                      "example": "T"
+                    },
+                    "p357": {
+                      "type": "string",
+                      "example": "T"
+                    },
+                    "p227": {
+                      "type": "string",
+                      "example": "T"
+                    },
+                    "p56": {
+                      "type": "string",
+                      "example": "T"
+                    },
+                    "p9": {
+                      "type": "string",
+                      "example": "T"
+                    },
+                    "p213": {
+                      "type": "string",
+                      "example": "T"
+                    },
                     "token": {
                       "type": "string",
-                      "description": "O token gerado após o login.",
-                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoidXN1YXJpby5jb20ifQ.AZdPoGht7vcMw3IQZtGSF4FVs8DjHgEGO1ofA_1lS-c"
+                      "example": "...GhLNG9reFE5RFlMQlNkSXJUUnRa..."
+                    },
+                    "corp_mais_dashboard": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "chat_bot": {
+                      "type": "boolean",
+                      "example": false
                     }
                   }
                 }
               }
             }
           },
-          "400": {
-            "description": "Dados inválidos"
-          },
           "401": {
-            "description": "Não autorizado"
+            "description": "Falha na autenticação.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "mensagem": {
+                      "type": "string",
+                      "example": "Credenciais inválidas"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401_CorpMais": {
+            "description": "Usuário sem permissão de acesso ao Corp+.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Usuário sem permissão de acesso ao Corp+."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401_EmailInvalido": {
+            "description": "Email inválido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Email inválido."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401_SenhaInvalida": {
+            "description": "Senha inválida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Senha inválida."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403_UsuarioConectado": {
+            "description": "Usuário já conectado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Usuário já conectado."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403_ConexoesExcedidas": {
+            "description": "Conexões excedidas.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Conexões excedidas."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
     "/logout": {
       "post": {
-        "summary": "Logout do usuário",
-        "description": "Realiza o logout de um usuário, invalidando a sessão.",
         "tags": [
           "Autenticação"
         ],
-        "requestBody": {
-          "required": false
-        },
-        "headers": {
-          "Authorization": {
-            "description": "Token de autenticação do usuário",
-            "schema": {
-              "type": "string",
-              "example": "{{token_auth}}"
-            }
+        "summary": "Logout de usuário",
+        "description": "Desloga o usuário e invalida o token de acesso.",
+        "security": [
+          {
+            "apiKeyAuth": []
           }
-        },
+        ],
         "responses": {
           "200": {
-            "description": "Logout bem-sucedido"
-          },
-          "400": {
-            "description": "Dados inválidos"
+            "description": "Conexão encerrada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Conexão encerrada com sucesso."
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
-            "description": "Não autorizado, token inválido ou expirado."
+            "description": "Sessão inativa.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Sessão inativa."
+                    },
+                    "user_logged": {
+                      "type": "boolean",
+                      "example": false
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
     "/documento": {
       "get": {
-        "summary": "Consultar documento",
-        "description": "Retorna detalhes de um documento com base no código da filial e no número do documento.",
         "tags": [
           "Documentos/Produção"
+        ],
+        "summary": "Obter documento específico",
+        "description": "Obtém um documento com base no código da filial e no número do documento.",
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
         ],
         "parameters": [
           {
             "name": "codfil",
             "in": "query",
-            "required": true,
             "description": "Código da filial.",
+            "required": false,
             "schema": {
               "type": "integer",
               "example": 1
@@ -166,50 +409,624 @@
           {
             "name": "nosnum",
             "in": "query",
+            "description": "Número do documento.",
             "required": false,
-            "description": "Código do documento.",
             "schema": {
-              "type": "string",
-              "example": "123456"
+              "type": "integer",
+              "example": 12345
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Documento encontrado"
-          },
-          "400": {
-            "description": "Solicitação inválida"
+            "description": "Documento encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": 1
+                        }
+                      }
+                    },
+                    "documento": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "codfil": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "nosnum": {
+                            "type": "integer",
+                            "example": 123
+                          },
+                          "tipdoc": {
+                            "type": "string",
+                            "example": "A"
+                          },
+                          "numren": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "numapo": {
+                            "type": "string",
+                            "example": "0"
+                          },
+                          "numend": {
+                            "type": "string",
+                            "example": "0"
+                          },
+                          "codcia": {
+                            "type": "integer",
+                            "example": 12
+                          },
+                          "codram": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "codcli": {
+                            "type": "integer",
+                            "example": 60
+                          },
+                          "datpro": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "24/02/2025"
+                          },
+                          "datemi": {
+                            "type": "string",
+                            "nullable": true,
+                            "format": "date",
+                            "example": null
+                          },
+                          "inivig": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "01/01/2025"
+                          },
+                          "fimvig": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "01/01/2026"
+                          },
+                          "forma_pag": {
+                            "type": "string",
+                            "example": "Boleto Bancário"
+                          },
+                          "numpar": {
+                            "type": "integer",
+                            "example": 12
+                          },
+                          "preliq": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 1500
+                          },
+                          "preadi": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "predes": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "precus": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "preiof": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 110.7
+                          },
+                          "pretot": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 1610.7
+                          },
+                          "prepri": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 134.23
+                          },
+                          "vencim": {
+                            "type": "integer",
+                            "example": 7
+                          },
+                          "cuspri": {
+                            "type": "string",
+                            "example": "F"
+                          },
+                          "diafix": {
+                            "type": "integer",
+                            "example": 15
+                          },
+                          "usuinc": {
+                            "type": "string",
+                            "example": "INFOCAP"
+                          },
+                          "usualt": {
+                            "type": "string",
+                            "example": "INFOCAP"
+                          },
+                          "datinc": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "24/02/2025 19:45:31"
+                          },
+                          "modificado": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "24/02/2025 19:46:03"
+                          },
+                          "sinistro": {
+                            "type": "string",
+                            "example": "F"
+                          },
+                          "codfil_ren": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "nosnum_ren": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "codfil_end": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "nosnum_end": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "numprop": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "motivo_endosso": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "campo_base_c": {
+                            "type": "integer",
+                            "example": 3
+                          },
+                          "base_c": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 1610.7
+                          },
+                          "per_c": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 25
+                          },
+                          "val_c": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 402.68
+                          },
+                          "forma_recebimento_c": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "val_ca": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "campo_base_cp": {
+                            "type": "integer",
+                            "example": 0
+                          },
+                          "base_cp": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "per_cp": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "val_cp": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "forma_recebimento_cp": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "recusado": {
+                            "type": "string",
+                            "example": "F"
+                          },
+                          "codcanal": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "observacoes_txt": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "tabela_itens": {
+                            "type": "string",
+                            "example": "AUTOMOVEL"
+                          },
+                          "ramo_abrev": {
+                            "type": "string",
+                            "example": "AUTO"
+                          },
+                          "ramo": {
+                            "type": "string",
+                            "example": "AUTOMOVEL"
+                          },
+                          "telram": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "seguradora_abrev": {
+                            "type": "string",
+                            "example": "PORT"
+                          },
+                          "seguradora": {
+                            "type": "string",
+                            "example": "PORTO SEGURO"
+                          },
+                          "filial": {
+                            "type": "string",
+                            "example": "BASE DE DEMONSTRAÇÃO"
+                          },
+                          "sit_acompanhamento": {
+                            "type": "integer",
+                            "example": 2
+                          },
+                          "sit_acompanhamento_txt": {
+                            "type": "string",
+                            "example": "Pendente de emissão - em atraso"
+                          },
+                          "sit_sinistro": {
+                            "type": "integer",
+                            "example": 0
+                          },
+                          "sit_sinistro_txt": {
+                            "type": "string",
+                            "example": "APÓLICE SEM SINISTRO"
+                          },
+                          "cancelado": {
+                            "type": "string",
+                            "example": "F"
+                          },
+                          "sit_renovacao": {
+                            "type": "integer",
+                            "example": 3
+                          },
+                          "sit_renovacao_txt": {
+                            "type": "string",
+                            "example": "APÓLICE NOVA\r APÓLICE NÃO RENOVADA\r VIGÊNCIA: 01/01/2025 A 31/01/2025\r "
+                          },
+                          "renovado_codfil": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "renovado_nosnum": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "tipdoc_txt": {
+                            "type": "string",
+                            "example": "A - Apólice"
+                          },
+                          "motivo_endosso_txt": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "ad_receb_data": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "ad_entr_data": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "cliente": {
+                            "type": "string",
+                            "example": "TESTE API"
+                          },
+                          "ad_receb_doc_fisico": {
+                            "type": "string",
+                            "example": "F"
+                          },
+                          "ad_receb_doc_digital": {
+                            "type": "string",
+                            "example": "F"
+                          },
+                          "ad_entr_forma": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "bot_a_dthora": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "cod_forma_pag": {
+                            "type": "integer",
+                            "example": 2
+                          },
+                          "codopo": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "dtfim_negociacao": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "codmulti": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "importado_pelo_incorp": {
+                            "type": "string",
+                            "example": "F"
+                          },
+                          "canal_vendas_descricao": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "parcelas": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Documento não encontrado"
+            "description": "Documento não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Documento não encontrado."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documentos": {
+      "get": {
+        "summary": "Consulta Documentos",
+        "tags": [
+          "Documentos/Produção"
+        ],
+        "description": "Endpoint para consultar documentos com base em filtros específicos.",
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "codfil",
+            "in": "query",
+            "description": "Código da filial",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "periodo",
+            "in": "query",
+            "description": "Data a ser utilizada - Ex: datinc(data de inclusão) datalt(data de alteração)",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "datinc"
+            }
+          },
+          {
+            "name": "datini",
+            "in": "query",
+            "description": "Data inicial do período (formato: dd/MM/yyyy)",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "01/01/2023"
+            }
+          },
+          {
+            "name": "datfim",
+            "in": "query",
+            "description": "Data final do período (formato: dd/MM/yyyy)",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "30/01/2023"
+            }
+          },
+          {
+            "name": "ordem",
+            "in": "query",
+            "description": "Tipo de ordenação. Ex: nosnum (identificador do documento)",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "nosnum"
+            }
+          },
+          {
+            "name": "qtd_pag",
+            "in": "query",
+            "description": "Quantidade de itens por página.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 20
+            }
+          },
+          {
+            "name": "pag",
+            "in": "query",
+            "description": "Número da página que será retornada.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de documentos encontrados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": 100
+                        }
+                      }
+                    },
+                    "documentos": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "codfil": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "nosnum": {
+                            "type": "integer",
+                            "example": 191
+                          },
+                          "tipdoc": {
+                            "type": "string",
+                            "example": "A"
+                          },
+                          "seguradora": {
+                            "type": "string",
+                            "example": "PORT"
+                          },
+                          "ramo": {
+                            "type": "string",
+                            "example": "AUTO"
+                          },
+                          "cliente": {
+                            "type": "string",
+                            "example": "TESTE API"
+                          },
+                          "inivig": {
+                            "type": "string",
+                            "example": "01/01/2025"
+                          },
+                          "fimvig": {
+                            "type": "string",
+                            "example": "31/01/2025"
+                          },
+                          "numapo": {
+                            "type": "string",
+                            "example": "0"
+                          },
+                          "numend": {
+                            "type": "string",
+                            "example": "0"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parâmetros inválidos"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
           }
         }
       }
     },
     "/producao": {
       "get": {
-        "summary": "Consultar produção",
-        "description": "Retorna detalhes da produção com base nos parâmetros fornecidos.",
+        "summary": "Consulta Produção",
         "tags": [
           "Documentos/Produção"
+        ],
+        "description": "Endpoint para buscar registros de produção com filtros específicos.",
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
         ],
         "parameters": [
           {
             "name": "texto",
             "in": "query",
-            "required": false,
-            "description": "Busca por texto genérico (nome, e-mail, etc.).",
+            "description": "Esse campo é uma busca por texto genérica, busca por nome, e-mail, nos contatos",
             "schema": {
               "type": "string",
-              "example": "BuscaProdução"
+              "example": ""
             }
           },
           {
             "name": "dt_ini",
             "in": "query",
+            "description": "Data inicial por início de vigência (formato: dd/MM/yyyy)",
             "required": true,
-            "description": "Data inicial para o filtro de produção.",
             "schema": {
               "type": "string",
               "example": "22/02/2022"
@@ -218,8 +1035,8 @@
           {
             "name": "dt_fim",
             "in": "query",
+            "description": "Data final por início de vigência (formato: dd/MM/yyyy)",
             "required": true,
-            "description": "Data final para o filtro de produção.",
             "schema": {
               "type": "string",
               "example": "22/02/2022"
@@ -228,8 +1045,7 @@
           {
             "name": "ordem",
             "in": "query",
-            "required": false,
-            "description": "Ordem de ordenação dos registros.",
+            "description": "Tipo de ordenação (campo usado para ordenar os resultados)",
             "schema": {
               "type": "string",
               "example": "inivig"
@@ -238,43 +1054,163 @@
           {
             "name": "orientacao",
             "in": "query",
-            "required": false,
-            "description": "Orientação de ordenação (ascendente ou descendente).",
+            "description": "Orientação dos registros filtrados (ascendente ou descendente)",
             "schema": {
               "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ],
               "example": "asc"
             }
           },
           {
             "name": "so_renovados",
             "in": "query",
-            "required": false,
-            "description": "Filtra apenas os renovados (T - true, F - false, X - todos).",
+            "description": "Filtrar apenas renovados. Valores: T - true | F - false | X - todos",
             "schema": {
               "type": "string",
-              "example": "t"
+              "enum": [
+                "T",
+                "F",
+                "X"
+              ],
+              "example": "T"
             }
           },
           {
             "name": "so_emitidos",
             "in": "query",
-            "required": false,
-            "description": "Filtra apenas os emitidos (T - true, F - false, X - todos).",
+            "description": "Filtrar apenas emitidos. Valores: T - true | F - false | X - todos",
             "schema": {
               "type": "string",
-              "example": "x"
+              "enum": [
+                "T",
+                "F",
+                "X"
+              ],
+              "example": "X"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Produção encontrada"
+            "description": "Lista de produções encontradas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": 1
+                        }
+                      }
+                    },
+                    "producao": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "codfil": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "nosnum": {
+                            "type": "integer",
+                            "example": 123
+                          },
+                          "tipdoc": {
+                            "type": "string",
+                            "example": "A"
+                          },
+                          "seguradora": {
+                            "type": "string",
+                            "example": "PORT"
+                          },
+                          "ramo": {
+                            "type": "string",
+                            "example": "AUTO"
+                          },
+                          "cliente_codigo": {
+                            "type": "integer",
+                            "example": 60
+                          },
+                          "cliente": {
+                            "type": "string",
+                            "example": "TESTE API"
+                          },
+                          "inivig": {
+                            "type": "string",
+                            "example": "01/01/2025"
+                          },
+                          "fimvig": {
+                            "type": "string",
+                            "example": "01/01/2026"
+                          },
+                          "numapo": {
+                            "type": "string",
+                            "example": "0"
+                          },
+                          "numend": {
+                            "type": "string",
+                            "example": "0"
+                          },
+                          "numprop": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "datemi": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "nosnum_ren": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "bot_a_dthora": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "sin_situacao": {
+                            "type": "integer",
+                            "example": 0
+                          },
+                          "cancelado": {
+                            "type": "string",
+                            "example": "F"
+                          },
+                          "historico_imagem": {
+                            "type": "integer",
+                            "example": 16
+                          },
+                          "renovacao_situacao": {
+                            "type": "integer",
+                            "example": 3
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Solicitação inválida"
+            "description": "Parâmetros inválidos"
           },
-          "404": {
-            "description": "Produção não encontrada"
+          "401": {
+            "description": "Não autorizado"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
           }
         }
       }
@@ -417,78 +1353,6 @@
           },
           "404": {
             "description": "Renovações não encontradas"
-          }
-        }
-      }
-    },
-    "/documentos": {
-      "get": {
-        "summary": "Consultar documentos",
-        "description": "Retorna documentos com base em um período e código da filial.",
-        "tags": [
-          "Documentos/Produção"
-        ],
-        "parameters": [
-          {
-            "name": "periodo",
-            "in": "query",
-            "required": true,
-            "description": "Período de busca dos documentos (datinc, etc).",
-            "schema": {
-              "type": "string",
-              "example": "datinc"
-            }
-          },
-          {
-            "name": "datini",
-            "in": "query",
-            "required": true,
-            "description": "Data inicial para o filtro de documentos.",
-            "schema": {
-              "type": "string",
-              "example": "13/03/2025"
-            }
-          },
-          {
-            "name": "datfim",
-            "in": "query",
-            "required": true,
-            "description": "Data final para o filtro de documentos.",
-            "schema": {
-              "type": "string",
-              "example": "13/03/2025"
-            }
-          },
-          {
-            "name": "codfil",
-            "in": "query",
-            "required": true,
-            "description": "Código da filial.",
-            "schema": {
-              "type": "integer",
-              "example": 1
-            }
-          },
-          {
-            "name": "texto",
-            "in": "query",
-            "required": false,
-            "description": "Texto para busca.",
-            "schema": {
-              "type": "string",
-              "example": "JBR7I13"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Documentos encontrados"
-          },
-          "400": {
-            "description": "Solicitação inválida"
-          },
-          "404": {
-            "description": "Documentos não encontrados"
           }
         }
       }
@@ -2576,6 +3440,15 @@
             "description": "Documentos BI não encontrados"
           }
         }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "apiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization"
       }
     }
   }
