@@ -1346,13 +1346,166 @@
         ],
         "responses": {
           "200": {
-            "description": "Renovações encontradas"
-          },
-          "400": {
-            "description": "Solicitação inválida"
-          },
-          "404": {
-            "description": "Renovações não encontradas"
+            "description": "Renovações",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "description": "Quantidade de renovações encontradas",
+                          "example": 1
+                        }
+                      }
+                    },
+                    "renovacoes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "codfil": {
+                            "type": "integer",
+                            "description": "Código da filial",
+                            "example": 1
+                          },
+                          "nosnum": {
+                            "type": "integer",
+                            "description": "Número interno do documento",
+                            "example": 296
+                          },
+                          "tipdoc": {
+                            "type": "string",
+                            "description": "Tipo de documento",
+                            "example": "A"
+                          },
+                          "codcli": {
+                            "type": "integer",
+                            "description": "Código do cliente",
+                            "example": 80
+                          },
+                          "datemi": {
+                            "type": "string",
+                            "format": "date",
+                            "nullable": true,
+                            "description": "Data de emissão do documento",
+                            "example": null
+                          },
+                          "fimvig": {
+                            "type": "string",
+                            "description": "Data de fim de vigência",
+                            "example": "01/01/2026"
+                          },
+                          "nosnum_ren": {
+                            "type": "integer",
+                            "description": "Número do documento renovado",
+                            "example": 294
+                          },
+                          "cancelado": {
+                            "type": "string",
+                            "description": "Indica se a renovação foi cancelada (T/F)",
+                            "example": "F"
+                          },
+                          "cliente": {
+                            "type": "string",
+                            "description": "Nome do cliente",
+                            "example": "RENOVAÇÕES"
+                          },
+                          "nome_busca": {
+                            "type": "string",
+                            "description": "Nome de busca do cliente",
+                            "example": "RENOVACOES"
+                          },
+                          "pessoa": {
+                            "type": "string",
+                            "description": "Tipo de pessoa (F - Física, J - Jurídica)",
+                            "example": "F"
+                          },
+                          "cic": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "CPF ou CNPJ do cliente",
+                            "example": null
+                          },
+                          "fone": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Telefone do cliente",
+                            "example": null
+                          },
+                          "email": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "E-mail do cliente",
+                            "example": null
+                          },
+                          "seguradora": {
+                            "type": "string",
+                            "description": "Nome da seguradora",
+                            "example": "ALLI"
+                          },
+                          "ramo": {
+                            "type": "string",
+                            "description": "Ramo do seguro",
+                            "example": "AUTO"
+                          },
+                          "numapo": {
+                            "type": "string",
+                            "description": "Número da apólice",
+                            "example": "0"
+                          },
+                          "pretot": {
+                            "type": "number",
+                            "format": "float",
+                            "description": "Prêmio total",
+                            "example": 1000.0
+                          },
+                          "historico_imagem": {
+                            "type": "integer",
+                            "description": "Código da imagem associada ao histórico",
+                            "example": 11
+                          },
+                          "historico_hint": {
+                            "type": "string",
+                            "description": "Texto de dica sobre o histórico",
+                            "example": "APÓLICE NÃO NOVA - RENOVAÇÃO DO DOCUMENTO [294]\r APÓLICE VIGENTE\r VIGÊNCIA: 01/01/2025 A 01/01/2026\r "
+                          },
+                          "renovacao_situacao": {
+                            "type": "integer",
+                            "description": "Código da situação da renovação",
+                            "example": 1
+                          },
+                          "sin_situacao": {
+                            "type": "integer",
+                            "description": "Código da situação de sinistro",
+                            "example": 0
+                          },
+                          "situacao_txt": {
+                            "type": "string",
+                            "description": "Texto da situação do sinistro",
+                            "example": "APÓLICE SEM SINISTRO"
+                          },
+                          "dias_a_vencer": {
+                            "type": "integer",
+                            "description": "Número de dias para vencer a apólice",
+                            "example": 250
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Solicitação inválida"
+            },
+            "404": {
+              "description": "Renovações não encontradas"
+            }
           }
         }
       }
@@ -1430,7 +1583,54 @@
         ],
         "responses": {
           "200": {
-            "description": "Endossos encontrados"
+            "description": "Endossos encontrados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "description": "Quantidade de endossos encontrados",
+                          "example": 1
+                        }
+                      }
+                    },
+                    "endossos": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "codfil": {
+                            "type": "integer",
+                            "description": "Código da filial",
+                            "example": 1
+                          },
+                          "nosnum": {
+                            "type": "integer",
+                            "description": "Número interno do documento",
+                            "example": 123
+                          },
+                          "tipdoc": {
+                            "type": "string",
+                            "description": "Tipo de documento",
+                            "example": "C"
+                          },
+                          "inivig": {
+                            "type": "string",
+                            "description": "Data de início de vigência",
+                            "example": "26/04/2025"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "Solicitação inválida"
@@ -1471,7 +1671,95 @@
         ],
         "responses": {
           "200": {
-            "description": "Cliente encontrado"
+            "description": "Cliente encontrado",
+            "content": {
+              "application/json": {
+                "example": {
+                  "header": {
+                    "count": 1
+                  },
+                  "cliente": [
+                    {
+                      "codfil": 123,
+                      "codigo": 456,
+                      "nome": "Cliente Teste",
+                      "ativo": "T",
+                      "cpf_cnpj": "00000000000000",
+                      "datanas": "01/01/1990",
+                      "pessoa": "F",
+                      "sexo": "M",
+                      "email": "cliente@teste.com",
+                      "telefone": "(00) 000000000",
+                      "cidade": "Cidade Teste",
+                      "estado": "TS",
+                      "vigente": true,
+                      "observacoes": "",
+                      "profissao": "Profissão Teste",
+                      "cod_profissao": 99,
+                      "estado_civil": "SOLTEIRO(A)",
+                      "cod_estado_civil": 1,
+                      "escolaridade": null,
+                      "cod_escolaridade": null,
+                      "enderecos": [
+                        {
+                          "codfil": 123,
+                          "codigo": 789,
+                          "tipo": "R",
+                          "logradouro": "Rua Teste, 123",
+                          "numero": "",
+                          "complemento": "",
+                          "bairro": "Bairro Teste",
+                          "cep": 12345678,
+                          "padrao": "T",
+                          "cidade": "Cidade Teste",
+                          "estado": "TS"
+                        }
+                      ],
+                      "emails": [
+                        {
+                          "codfil": 123,
+                          "codigo": 1011,
+                          "email": "cliente@teste.com",
+                          "padrao": "T",
+                          "codcli": 456,
+                          "codcon": null,
+                          "codemp": null
+                        }
+                      ],
+                      "telefones": [
+                        {
+                          "codfil": 123,
+                          "codigo": 1213,
+                          "tipo": "C",
+                          "ddd": 0,
+                          "numero": "000000000",
+                          "ramal": null,
+                          "padrao": "T",
+                          "codcli": 456,
+                          "codcon": null,
+                          "codemp": null
+                        },
+                        {
+                          "codfil": 123,
+                          "codigo": 1415,
+                          "tipo": "E",
+                          "ddd": 0,
+                          "numero": "000000000",
+                          "ramal": null,
+                          "padrao": "F",
+                          "codcli": 456,
+                          "codcon": null,
+                          "codemp": null
+                        }
+                      ],
+                      "contatos": [
+                        "Contatos do cliente"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
           }
         }
       },
@@ -1482,6 +1770,7 @@
           "Cliente"
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -1489,116 +1778,186 @@
                 "properties": {
                   "codfil": {
                     "type": "integer",
-                    "example": 1
+                    "description": "Código da filial.",
+                    "example": 123
                   },
                   "nome": {
                     "type": "string",
-                    "example": "teste"
+                    "description": "Nome do cliente.",
+                    "example": "Cliente Teste"
                   },
                   "ativo": {
                     "type": "string",
-                    "example": "F"
+                    "description": "Indica se o cliente está ativo (T - ativo, F - inativo).",
+                    "example": "T"
                   },
                   "cpf_cnpj": {
                     "type": "string",
-                    "nullable": true,
-                    "example": null
+                    "description": "CPF ou CNPJ do cliente, somente números.",
+                    "example": "00000000000"
                   },
                   "datanas": {
                     "type": "string",
-                    "format": "date",
-                    "example": "04/05/1915"
+                    "description": "Data de nascimento do cliente no formato DD/MM/AAAA.",
+                    "example": "01/01/1990"
                   },
                   "pessoa": {
                     "type": "string",
+                    "description": "Tipo de pessoa (F - Física, J - Jurídica).",
                     "example": "F"
                   },
                   "sexo": {
                     "type": "string",
+                    "description": "Sexo do cliente (M - Masculino, F - Feminino).",
                     "example": "M"
                   },
                   "observacoes": {
                     "type": "string",
-                    "example": ""
+                    "description": "Observações gerais sobre o cliente.",
+                    "example": "Teste API - Cliente Teste"
+                  },
+                  "profissao": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "Profissão do cliente (se aplicável).",
+                    "example": "Corretor"
+                  },
+                  "estado_civil": {
+                    "type": "integer",
+                    "description": "Código do estado civil",
+                    "example": 1
+                  },
+                  "escolaridade": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "Grau de escolaridade do cliente (se aplicável).",
+                    "example": "Seperior"
+                  },
+                  "usuinc": {
+                    "type": "integer",
+                    "description": "Código do usuário que realizou a inclusão.",
+                    "example": 999
                   },
                   "enderecos": {
                     "type": "array",
+                    "description": "Lista de endereços do cliente.",
                     "items": {
                       "type": "object",
                       "properties": {
                         "tipo": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "Tipo de endereço (R - Residencial, C - Comercial).",
+                          "example": "R"
                         },
                         "logradouro": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "Nome da rua ou logradouro.",
+                          "example": "Rua Teste, 123"
                         },
                         "numero": {
-                          "type": "integer"
+                          "type": "integer",
+                          "nullable": true,
+                          "description": "Número do endereço.",
+                          "example": 123
                         },
                         "complemento": {
-                          "type": "string"
+                          "type": "string",
+                          "nullable": true,
+                          "description": "Complemento do endereço",
+                          "example": "Apartamento 101"
                         },
                         "bairro": {
                           "type": "string",
-                          "nullable": true
+                          "nullable": true,
+                          "description": "Bairro do endereço.",
+                          "example": "Bairro Teste"
                         },
                         "cep": {
-                          "type": "integer"
+                          "type": "integer",
+                          "description": "Código postal (CEP) do endereço.",
+                          "example": 12345678
                         },
                         "padrao": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "Se é o endereço padrão (T - sim, F - não).",
+                          "example": "T"
                         },
                         "cidade": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "Cidade do endereço.",
+                          "example": "Cidade Teste"
                         },
                         "estado": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "Sigla do estado (UF).",
+                          "example": "TS"
                         }
                       }
                     }
                   },
                   "emails": {
                     "type": "array",
+                    "description": "Lista de e-mails do cliente.",
                     "items": {
                       "type": "object",
                       "properties": {
                         "email": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "Endereço de e-mail.",
+                          "example": "cliente1@teste.com"
                         },
                         "padrao": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "Indica se é o e-mail principal (T - sim, F - não).",
+                          "example": "T"
                         }
                       }
                     }
                   },
                   "telefones": {
                     "type": "array",
+                    "description": "Lista de telefones do cliente.",
                     "items": {
                       "type": "object",
                       "properties": {
                         "tipo": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "Tipo de telefone (C - Celular, E - Escritório, etc).",
+                          "example": "C"
                         },
                         "ddd": {
-                          "type": "integer"
+                          "type": "integer",
+                          "nullable": true,
+                          "description": "Código de área (DDD) do telefone.",
+                          "example": 11
                         },
                         "numero": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "Número do telefone.",
+                          "example": "999999999"
                         },
                         "ramal": {
                           "type": "string",
-                          "nullable": true
+                          "nullable": true,
+                          "description": "Número do ramal (se aplicável).",
+                          "example": null
                         },
                         "padrao": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "Indica se é o telefone principal (T - sim, F - não).",
+                          "example": "T"
                         },
                         "codcon": {
-                          "type": "string",
-                          "nullable": true
+                          "type": "integer",
+                          "nullable": true,
+                          "description": "Código do contato associado (se aplicável).",
+                          "example": null
                         },
                         "codemp": {
-                          "type": "string",
-                          "nullable": true
+                          "type": "integer",
+                          "nullable": true,
+                          "description": "Código da empresa associada (se aplicável).",
+                          "example": null
                         }
                       }
                     }
@@ -1610,7 +1969,79 @@
         },
         "responses": {
           "201": {
-            "description": "Cliente inserido com sucesso"
+            "description": "Cliente cadastrado com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "codfil": 123,
+                  "nome": "Cliente Teste",
+                  "ativo": "T",
+                  "cpf_cnpj": "00000000000",
+                  "datanas": "01/01/1990",
+                  "pessoa": "F",
+                  "sexo": "M",
+                  "observacoes": "Teste API - Cliente Teste",
+                  "profissao": null,
+                  "estado_civil": 1,
+                  "escolaridade": null,
+                  "usuinc": 999,
+                  "enderecos": [
+                    {
+                      "tipo": "R",
+                      "logradouro": "Rua Teste, 123",
+                      "numero": 123,
+                      "complemento": "Apartamento 101",
+                      "bairro": "Bairro Teste",
+                      "cep": 12345678,
+                      "padrao": "T",
+                      "cidade": "Cidade Teste",
+                      "estado": "TS"
+                    },
+                    {
+                      "tipo": "C",
+                      "logradouro": "Avenida Teste, 456",
+                      "numero": null,
+                      "complemento": null,
+                      "bairro": "Centro",
+                      "cep": 87654321,
+                      "padrao": "F",
+                      "cidade": "Cidade Exemplo",
+                      "estado": "TE"
+                    }
+                  ],
+                  "emails": [
+                    {
+                      "email": "cliente1@teste.com",
+                      "padrao": "T"
+                    },
+                    {
+                      "email": "cliente2@teste.com",
+                      "padrao": "F"
+                    }
+                  ],
+                  "telefones": [
+                    {
+                      "tipo": "C",
+                      "ddd": 11,
+                      "numero": "999999999",
+                      "ramal": null,
+                      "padrao": "T",
+                      "codcon": null,
+                      "codemp": null
+                    },
+                    {
+                      "tipo": "E",
+                      "ddd": 11,
+                      "numero": "888888888",
+                      "ramal": null,
+                      "padrao": "F",
+                      "codcon": null,
+                      "codemp": null
+                    }
+                  ]
+                }
+              }
+            }
           }
         }
       },
@@ -1739,6 +2170,11 @@
             "required": false,
             "schema": {
               "type": "string",
+              "enum": [
+                "all",
+                "vigentes",
+                "nao_vigentes"
+              ],
               "example": "all"
             }
           },
@@ -1755,7 +2191,137 @@
         ],
         "responses": {
           "200": {
-            "description": "Lista de clientes"
+            "description": "Lista de clientes retornada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": 2
+                        }
+                      }
+                    },
+                    "clientes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "codfil": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "codigo": {
+                            "type": "integer",
+                            "example": 123456
+                          },
+                          "nome": {
+                            "type": "string",
+                            "example": "CLIENTE TESTE 1"
+                          },
+                          "ativo": {
+                            "type": "string",
+                            "description": "T para ativo, F para inativo",
+                            "example": "T"
+                          },
+                          "cpf_cnpj": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": "12345678901"
+                          },
+                          "datanas": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Data de nascimento no formato dd/MM/yyyy",
+                            "example": "01/01/1990"
+                          },
+                          "pessoa": {
+                            "type": "string",
+                            "description": "F para pessoa física, J para jurídica",
+                            "example": "F"
+                          },
+                          "sexo": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": "M"
+                          },
+                          "email": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": "cliente1@teste.com"
+                          },
+                          "telefone": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": "(11) 91234-5678"
+                          },
+                          "cidade": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": "São Paulo"
+                          },
+                          "estado": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": "SP"
+                          },
+                          "vigente": {
+                            "type": "string",
+                            "description": "T para vigente, F para não vigente",
+                            "example": "T"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "exemplo1": {
+                    "value": {
+                      "header": {
+                        "count": 2
+                      },
+                      "clientes": [
+                        {
+                          "codfil": 1,
+                          "codigo": 123456,
+                          "nome": "CLIENTE TESTE 1",
+                          "ativo": "T",
+                          "cpf_cnpj": "12345678901",
+                          "datanas": "01/01/1990",
+                          "pessoa": "F",
+                          "sexo": "M",
+                          "email": "cliente1@teste.com",
+                          "telefone": "(11) 91234-5678",
+                          "cidade": "São Paulo",
+                          "estado": "SP",
+                          "vigente": "T"
+                        },
+                        {
+                          "codfil": 1,
+                          "codigo": 654321,
+                          "nome": "CLIENTE TESTE 2",
+                          "ativo": "F",
+                          "cpf_cnpj": "10987654321",
+                          "datanas": null,
+                          "pessoa": "J",
+                          "sexo": "",
+                          "email": "empresa@teste.com",
+                          "telefone": "(21) 98765-4321",
+                          "cidade": "Rio de Janeiro",
+                          "estado": "RJ",
+                          "vigente": "F"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1790,7 +2356,162 @@
         ],
         "responses": {
           "200": {
-            "description": "Cliente encontrado"
+            "description": "Cliente retornado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cliente": {
+                      "type": "object",
+                      "properties": {
+                        "codfil": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "codigo": {
+                          "type": "integer",
+                          "example": 123456
+                        },
+                        "nome": {
+                          "type": "string",
+                          "example": "CLIENTE TESTE"
+                        },
+                        "cpf_cnpj": {
+                          "type": "string",
+                          "example": "00000000000"
+                        },
+                        "datanas": {
+                          "type": "string",
+                          "nullable": true,
+                          "example": null
+                        },
+                        "sexo": {
+                          "type": "string",
+                          "example": ""
+                        },
+                        "cod_estado_civil": {
+                          "type": "integer",
+                          "nullable": true,
+                          "example": null
+                        },
+                        "estado_civil": {
+                          "type": "string",
+                          "nullable": true,
+                          "example": null
+                        },
+                        "emails": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          },
+                          "example": []
+                        },
+                        "telefones": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          },
+                          "example": []
+                        },
+                        "enderecos": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "codfil": {
+                                "type": "integer",
+                                "example": 1
+                              },
+                              "codigo": {
+                                "type": "integer",
+                                "example": 654321
+                              },
+                              "tipo": {
+                                "type": "string",
+                                "example": "R"
+                              },
+                              "logradouro": {
+                                "type": "string",
+                                "nullable": true,
+                                "example": null
+                              },
+                              "numero": {
+                                "type": "string",
+                                "nullable": true,
+                                "example": null
+                              },
+                              "complemento": {
+                                "type": "string",
+                                "nullable": true,
+                                "example": null
+                              },
+                              "bairro": {
+                                "type": "string",
+                                "nullable": true,
+                                "example": null
+                              },
+                              "cep": {
+                                "type": "string",
+                                "nullable": true,
+                                "example": null
+                              },
+                              "cidade": {
+                                "type": "string",
+                                "nullable": true,
+                                "example": null
+                              },
+                              "estado": {
+                                "type": "string",
+                                "nullable": true,
+                                "example": null
+                              },
+                              "padrao": {
+                                "type": "string",
+                                "example": "T"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "clienteExemplo": {
+                    "value": {
+                      "cliente": {
+                        "codfil": 1,
+                        "codigo": 123456,
+                        "nome": "CLIENTE TESTE",
+                        "cpf_cnpj": "00000000000",
+                        "datanas": null,
+                        "sexo": "",
+                        "cod_estado_civil": null,
+                        "estado_civil": null,
+                        "emails": [],
+                        "telefones": [],
+                        "enderecos": [
+                          {
+                            "codfil": 1,
+                            "codigo": 654321,
+                            "tipo": "R",
+                            "logradouro": null,
+                            "numero": null,
+                            "complemento": null,
+                            "bairro": null,
+                            "cep": null,
+                            "cidade": null,
+                            "estado": null,
+                            "padrao": "T"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1850,7 +2571,80 @@
         ],
         "responses": {
           "200": {
-            "description": "Lista de clientes com base no filtro"
+            "description": "Lista de clientes retornada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": 78
+                        }
+                      }
+                    },
+                    "clientes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "codigo": {
+                            "type": "integer",
+                            "example": 123456
+                          },
+                          "nome": {
+                            "type": "string",
+                            "example": "CLIENTE TESTE 1"
+                          },
+                          "ddd": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "numero": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "clientesExemplo": {
+                    "value": {
+                      "header": {
+                        "count": 78
+                      },
+                      "clientes": [
+                        {
+                          "codigo": 123456,
+                          "nome": "CLIENTE TESTE 1",
+                          "ddd": null,
+                          "numero": null
+                        },
+                        {
+                          "codigo": 654321,
+                          "nome": "CLIENTE TESTE 2",
+                          "ddd": null,
+                          "numero": null
+                        },
+                        {
+                          "codigo": 789012,
+                          "nome": "CLIENTE TESTE 3",
+                          "ddd": null,
+                          "numero": null
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1875,7 +2669,178 @@
         ],
         "responses": {
           "200": {
-            "description": "Cliente encontrado"
+            "description": "Cliente retornado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cliente": {
+                      "type": "object",
+                      "properties": {
+                        "codfil": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "codigo": {
+                          "type": "integer",
+                          "example": 123456
+                        },
+                        "nome": {
+                          "type": "string",
+                          "example": "CLIENTE TESTE"
+                        },
+                        "cpf_cnpj": {
+                          "type": "string",
+                          "example": "00000000000"
+                        },
+                        "datanas": {
+                          "type": "string",
+                          "nullable": true,
+                          "example": null
+                        },
+                        "sexo": {
+                          "type": "string",
+                          "example": ""
+                        },
+                        "cod_estado_civil": {
+                          "type": "integer",
+                          "nullable": true,
+                          "example": null
+                        },
+                        "estado_civil": {
+                          "type": "string",
+                          "nullable": true,
+                          "example": null
+                        },
+                        "emails": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          },
+                          "example": []
+                        },
+                        "telefones": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          },
+                          "example": []
+                        },
+                        "enderecos": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "codfil": {
+                                "type": "integer",
+                                "example": 1
+                              },
+                              "codigo": {
+                                "type": "integer",
+                                "example": 654321
+                              },
+                              "tipo": {
+                                "type": "string",
+                                "example": "R"
+                              },
+                              "logradouro": {
+                                "type": "string",
+                                "nullable": true,
+                                "example": null
+                              },
+                              "numero": {
+                                "type": "string",
+                                "nullable": true,
+                                "example": null
+                              },
+                              "complemento": {
+                                "type": "string",
+                                "nullable": true,
+                                "example": null
+                              },
+                              "bairro": {
+                                "type": "string",
+                                "nullable": true,
+                                "example": null
+                              },
+                              "cep": {
+                                "type": "string",
+                                "nullable": true,
+                                "example": null
+                              },
+                              "cidade": {
+                                "type": "string",
+                                "nullable": true,
+                                "example": null
+                              },
+                              "estado": {
+                                "type": "string",
+                                "nullable": true,
+                                "example": null
+                              },
+                              "padrao": {
+                                "type": "string",
+                                "example": "T"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "clienteExemplo": {
+                    "value": {
+                      "cliente": {
+                        "codfil": 1,
+                        "codigo": 123456,
+                        "nome": "CLIENTE TESTE",
+                        "cpf_cnpj": "00000000000",
+                        "datanas": null,
+                        "sexo": "",
+                        "cod_estado_civil": null,
+                        "estado_civil": null,
+                        "emails": [],
+                        "telefones": [],
+                        "enderecos": [
+                          {
+                            "codfil": 1,
+                            "codigo": 654321,
+                            "tipo": "R",
+                            "logradouro": null,
+                            "numero": null,
+                            "complemento": null,
+                            "bairro": null,
+                            "cep": null,
+                            "cidade": null,
+                            "estado": null,
+                            "padrao": "T"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Corpo da requisição inválido."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1941,14 +2906,93 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "Endereço criado com sucesso"
+          "201": {
+            "description": "Endereço criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "codfil": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "codcli": {
+                      "type": "integer",
+                      "example": 123456
+                    },
+                    "codigo": {
+                      "type": "integer",
+                      "example": 654321
+                    },
+                    "tipo": {
+                      "type": "string",
+                      "example": "R"
+                    },
+                    "logradouro": {
+                      "type": "string",
+                      "example": "Rua Teste Exemplo"
+                    },
+                    "numero": {
+                      "type": "integer",
+                      "example": 100
+                    },
+                    "bairro": {
+                      "type": "string",
+                      "example": "Bairro Teste"
+                    },
+                    "padrao": {
+                      "type": "string",
+                      "example": "T"
+                    },
+                    "cep": {
+                      "type": "integer",
+                      "example": 12345000
+                    },
+                    "cidade": {
+                      "type": "string",
+                      "example": "Cidade Teste"
+                    },
+                    "estado": {
+                      "type": "string",
+                      "example": "RS"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Solicitação mal formada"
+            "description": "Requisição inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Corpo da requisição inválido."
+                    }
+                  }
+                }
+              }
+            }
           },
-          "401": {
-            "description": "Não autorizado"
+          "404": {
+            "description": "Cliente não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Nenhum cliente encontrado com o código informado."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -2017,13 +3061,93 @@
         },
         "responses": {
           "200": {
-            "description": "Endereço atualizado com sucesso"
+            "description": "Endereço atualizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "codigo": {
+                      "type": "integer",
+                      "example": 654321
+                    },
+                    "codcli": {
+                      "type": "integer",
+                      "example": 123456
+                    },
+                    "tipo": {
+                      "type": "string",
+                      "example": "R"
+                    },
+                    "logradouro": {
+                      "type": "string",
+                      "example": "Rua Teste de Atualização"
+                    },
+                    "numero": {
+                      "type": "integer",
+                      "example": 100
+                    },
+                    "complemento": {
+                      "type": "string",
+                      "example": "Sala 01/02"
+                    },
+                    "bairro": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": null
+                    },
+                    "cep": {
+                      "type": "integer",
+                      "example": 12345000
+                    },
+                    "padrao": {
+                      "type": "string",
+                      "example": "F"
+                    },
+                    "cidade": {
+                      "type": "string",
+                      "example": "Cidade Atualizada"
+                    },
+                    "estado": {
+                      "type": "string",
+                      "example": "RS"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Solicitação mal formada"
+            "description": "Requisição inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Corpo da requisição inválido."
+                    }
+                  }
+                }
+              }
+            }
           },
-          "401": {
-            "description": "Não autorizado"
+          "404": {
+            "description": "Cliente não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Nenhum cliente encontrado com o código informado."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -2048,13 +3172,52 @@
         ],
         "responses": {
           "200": {
-            "description": "Endereço deletado com sucesso"
+            "description": "Endereço deletado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Endereço deletado."
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Solicitação mal formada"
+            "description": "Requisição inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Corpo da requisição inválido."
+                    }
+                  }
+                }
+              }
+            }
           },
-          "401": {
-            "description": "Não autorizado"
+          "404": {
+            "description": "Cliente não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Nenhum cliente encontrado com o código informado."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -2093,13 +3256,68 @@
         },
         "responses": {
           "200": {
-            "description": "E-mail criado com sucesso"
+            "description": "E-mail atualizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "codfil": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "codigo": {
+                      "type": "integer",
+                      "example": 847
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "teste@email.com"
+                    },
+                    "padrao": {
+                      "type": "string",
+                      "example": "T"
+                    },
+                    "codcli": {
+                      "type": "integer",
+                      "example": 1
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Solicitação mal formada"
+            "description": "Requisição inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Corpo da requisição inválido."
+                    }
+                  }
+                }
+              }
+            }
           },
-          "401": {
-            "description": "Não autorizado"
+          "404": {
+            "description": "Cliente não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Nenhum cliente encontrado com o código informado."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -2119,11 +3337,11 @@
                 "properties": {
                   "codigo": {
                     "type": "integer",
-                    "example": 123
+                    "example": 654
                   },
                   "codcli": {
                     "type": "integer",
-                    "example": 123
+                    "example": 123456
                   },
                   "padrao": {
                     "type": "string",
@@ -2131,7 +3349,7 @@
                   },
                   "email": {
                     "type": "string",
-                    "example": "teste@gmail.com"
+                    "example": "testeatualiza@email.com"
                   }
                 }
               }
@@ -2140,13 +3358,68 @@
         },
         "responses": {
           "200": {
-            "description": "E-mail atualizado com sucesso"
+            "description": "E-mail atualizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "codfil": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "testeatualiza@email.com"
+                    },
+                    "codcli": {
+                      "type": "integer",
+                      "example": 123456
+                    },
+                    "padrao": {
+                      "type": "string",
+                      "example": "T"
+                    },
+                    "codigo": {
+                      "type": "integer",
+                      "example": 654
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Solicitação mal formada"
+            "description": "Requisição inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Corpo da requisição inválido."
+                    }
+                  }
+                }
+              }
+            }
           },
-          "401": {
-            "description": "Não autorizado"
+          "404": {
+            "description": "Cliente não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Nenhum cliente encontrado com o código informado."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -2171,13 +3444,36 @@
         ],
         "responses": {
           "200": {
-            "description": "E-mail deletado com sucesso"
+            "description": "Cliente não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "E-mail deletado"
+                    }
+                  }
+                }
+              }
+            }
           },
-          "400": {
-            "description": "Solicitação mal formada"
-          },
-          "401": {
-            "description": "Não autorizado"
+          "404": {
+            "description": "Cliente não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Nenhum cliente encontrado com o código informado."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -2224,13 +3520,89 @@
         },
         "responses": {
           "200": {
-            "description": "Telefone adicionado com sucesso"
+            "description": "Renovações",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "codfil": {
+                      "type": "integer",
+                      "description": "Código da filial",
+                      "example": 1
+                    },
+                    "codcli": {
+                      "type": "integer",
+                      "description": "Código do cliente",
+                      "example": 1
+                    },
+                    "codigo": {
+                      "type": "integer",
+                      "description": "Código do contato",
+                      "example": 1450
+                    },
+                    "tipo": {
+                      "type": "string",
+                      "description": "Tipo de telefone (C - Comercial, etc.)",
+                      "example": "C"
+                    },
+                    "ddd": {
+                      "type": "integer",
+                      "description": "DDD do telefone",
+                      "example": 51
+                    },
+                    "numero": {
+                      "type": "string",
+                      "description": "Número de telefone",
+                      "example": "35561006"
+                    },
+                    "padrao": {
+                      "type": "string",
+                      "description": "Indica se o telefone é padrão",
+                      "example": "T"
+                    },
+                    "ramal": {
+                      "type": "string",
+                      "nullable": true,
+                      "description": "Ramal do telefone (se aplicável)",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Solicitação mal formada"
+            "description": "Requisição inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Corpo da requisição inválido."
+                    }
+                  }
+                }
+              }
+            }
           },
-          "401": {
-            "description": "Não autorizado"
+          "404": {
+            "description": "Cliente não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Nenhum cliente encontrado com o código informado."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -2250,11 +3622,11 @@
                 "properties": {
                   "codigo": {
                     "type": "integer",
-                    "example": 123
+                    "example": 1450
                   },
                   "codcli": {
                     "type": "integer",
-                    "example": 123
+                    "example": 1
                   },
                   "tipo": {
                     "type": "string",
@@ -2279,13 +3651,83 @@
         },
         "responses": {
           "200": {
-            "description": "Telefone atualizado com sucesso"
+            "description": "Contato atualizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "codfil": {
+                      "type": "integer",
+                      "description": "Código da filial",
+                      "example": 1
+                    },
+                    "codigo": {
+                      "type": "integer",
+                      "description": "Código do contato",
+                      "example": 1450
+                    },
+                    "codcli": {
+                      "type": "integer",
+                      "description": "Código do cliente",
+                      "example": 1
+                    },
+                    "tipo": {
+                      "type": "string",
+                      "description": "Tipo de telefone (C - Comercial, etc.)",
+                      "example": "C"
+                    },
+                    "ddd": {
+                      "type": "integer",
+                      "description": "DDD do telefone",
+                      "example": 51
+                    },
+                    "numero": {
+                      "type": "string",
+                      "description": "Número de telefone",
+                      "example": "35661007"
+                    },
+                    "padrao": {
+                      "type": "string",
+                      "description": "Indica se o telefone é padrão",
+                      "example": "F"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Solicitação mal formada"
+            "description": "Requisição inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Corpo da requisição inválido."
+                    }
+                  }
+                }
+              }
+            }
           },
-          "401": {
-            "description": "Não autorizado"
+          "404": {
+            "description": "Cliente não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Nenhum cliente encontrado com o código informado."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -2310,13 +3752,52 @@
         ],
         "responses": {
           "200": {
-            "description": "Telefone deletado com sucesso"
+            "description": "Cliente não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Telefone deletado"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Solicitação mal formada"
+            "description": "Requisição inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Corpo da requisição inválido."
+                    }
+                  }
+                }
+              }
+            }
           },
-          "401": {
-            "description": "Não autorizado"
+          "404": {
+            "description": "Cliente não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Nenhum cliente encontrado com o código informado."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
