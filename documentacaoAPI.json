@@ -3,7 +3,10 @@
   "info": {
     "title": "CorpAPI",
     "description": "API para autenticação de usuários e gerenciamento de sessões.",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "contact": {
+      "name": "Suporte INFOCAP"
+    }
   },
   "tags": [
     {
@@ -53,7 +56,8 @@
   ],
   "servers": [
     {
-      "url": "https://api.corpnuvem.com"
+      "url": "https://api.corpnuvem.com",
+      "description": ""
     }
   ],
   "paths": {
@@ -818,8 +822,24 @@
               }
             }
           },
+          "403": {
+            "description": "Usuario nao possui permissão para ver documento",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Usuario nao possui permissão para ver documento."
+                    }
+                  }
+                }
+              }
+            }
+          },
           "404": {
-            "description": "Documento não encontrado.",
+            "description": "Nenhum documento encontrado para o nosnum xyz",
             "content": {
               "application/json": {
                 "schema": {
@@ -828,6 +848,22 @@
                     "message": {
                       "type": "string",
                       "example": "Documento não encontrado."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error."
                     }
                   }
                 }
@@ -992,10 +1028,84 @@
             }
           },
           "400": {
-            "description": "Parâmetros inválidos"
+            "description": "Quantidade de caracteres inválida para busca",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Quantidade de caracteres inválida para busca."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token de autenticação inválido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Token de autenticação inválido."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Usuário não possui permissão para ver documentos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Usuário não possui permissão para ver documentos."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Não há documentos para exibir",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Não há documentos para exibir."
+                    }
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Erro interno do servidor"
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1204,13 +1314,84 @@
             }
           },
           "400": {
-            "description": "Parâmetros inválidos"
+            "description": "Quantidade de caracteres inválida para busca",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Quantidade de caracteres inválida para busca."
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
-            "description": "Não autorizado"
+            "description": "Token de autenticação inválido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Token de autenticação inválido."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Usuário não possui permissão para ver documentos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Usuário não possui permissão para ver documentos."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Não há documentos para exibir",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Não há documentos para exibir."
+                    }
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Erro interno do servidor"
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1346,7 +1527,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Renovações",
+            "description": "Renovações encontradas",
             "content": {
               "application/json": {
                 "schema": {
@@ -1375,7 +1556,7 @@
                           "nosnum": {
                             "type": "integer",
                             "description": "Número interno do documento",
-                            "example": 296
+                            "example": 123
                           },
                           "tipdoc": {
                             "type": "string",
@@ -1385,14 +1566,14 @@
                           "codcli": {
                             "type": "integer",
                             "description": "Código do cliente",
-                            "example": 80
+                            "example": 1
                           },
                           "datemi": {
                             "type": "string",
                             "format": "date",
                             "nullable": true,
                             "description": "Data de emissão do documento",
-                            "example": null
+                            "example": "01/01/2025"
                           },
                           "fimvig": {
                             "type": "string",
@@ -1402,7 +1583,7 @@
                           "nosnum_ren": {
                             "type": "integer",
                             "description": "Número do documento renovado",
-                            "example": 294
+                            "example": 123
                           },
                           "cancelado": {
                             "type": "string",
@@ -1412,12 +1593,12 @@
                           "cliente": {
                             "type": "string",
                             "description": "Nome do cliente",
-                            "example": "RENOVAÇÕES"
+                            "example": "EXEMPLO RENOVAÇÃO"
                           },
                           "nome_busca": {
                             "type": "string",
                             "description": "Nome de busca do cliente",
-                            "example": "RENOVACOES"
+                            "example": "EXEMPLO RENOVAÇÃO"
                           },
                           "pessoa": {
                             "type": "string",
@@ -1461,7 +1642,7 @@
                             "type": "number",
                             "format": "float",
                             "description": "Prêmio total",
-                            "example": 1000.0
+                            "example": 1000
                           },
                           "historico_imagem": {
                             "type": "integer",
@@ -1492,6 +1673,38 @@
                             "type": "integer",
                             "description": "Número de dias para vencer a apólice",
                             "example": 250
+                          },
+                          "produtor": {
+                            "type": "string",
+                            "description": "Nome do produtor",
+                            "example": "MAR - TESTE"
+                          },
+                          "quant_produtores": {
+                            "type": "integer",
+                            "description": "Quantidade de produtores envolvidos",
+                            "example": 1
+                          },
+                          "codopo": {
+                            "type": "integer",
+                            "nullable": true,
+                            "description": "Código da oportunidade",
+                            "example": null
+                          },
+                          "situacao_multi": {
+                            "type": "string",
+                            "description": "Situação de multiplos riscos",
+                            "example": "-1"
+                          },
+                          "oportunidade": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "Oportunidade associada",
+                            "example": null
+                          },
+                          "inivig": {
+                            "type": "string",
+                            "description": "Data de início da vigência",
+                            "example": "01/01/2025"
                           }
                         }
                       }
@@ -1499,12 +1712,86 @@
                   }
                 }
               }
-            },
-            "400": {
-              "description": "Solicitação inválida"
-            },
-            "404": {
-              "description": "Renovações não encontradas"
+            }
+          },
+          "400": {
+            "description": "Quantidade de caracteres inválida para busca",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Quantidade de caracteres inválida para busca."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token de autenticação inválido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Token de autenticação inválido."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Usuário não possui permissão para ver documentos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Usuário não possui permissão para ver documentos."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Não há documentos para exibir",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Não há documentos para exibir."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error."
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -1541,13 +1828,113 @@
         ],
         "responses": {
           "200": {
-            "description": "Anexos encontrados"
+            "description": "Requisição bem-sucedida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": 1
+                        }
+                      }
+                    },
+                    "anexos": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "nome": {
+                            "type": "string",
+                            "example": "PDF TESTE GET ANEXO DOC"
+                          },
+                          "tipo": {
+                            "type": "string",
+                            "example": ".pdf"
+                          },
+                          "descricao": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "datahora": {
+                            "type": "string",
+                            "format": "date-time",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "usuinc": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "url": {
+                            "type": "string",
+                            "example": "link aqui"
+                          },
+                          "indice_anexo": {
+                            "type": "integer",
+                            "example": 123
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
-          "400": {
-            "description": "Solicitação inválida"
+          "403": {
+            "description": "Usuario nao possui permissão para ver documento",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Usuario nao possui permissão para ver documento"
+                    }
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Anexos não encontrados"
+            "description": "Não foi localizado nenhum anexo para o nosnum",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Não foi localizado nenhum anexo para o nosnum."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1612,7 +1999,7 @@
                           "nosnum": {
                             "type": "integer",
                             "description": "Número interno do documento",
-                            "example": 123
+                            "example": 456
                           },
                           "tipdoc": {
                             "type": "string",
@@ -1622,7 +2009,7 @@
                           "inivig": {
                             "type": "string",
                             "description": "Data de início de vigência",
-                            "example": "26/04/2025"
+                            "example": "01/02/2025"
                           }
                         }
                       }
@@ -1632,11 +2019,53 @@
               }
             }
           },
-          "400": {
-            "description": "Solicitação inválida"
+          "403": {
+            "description": "Usuario nao possui permissão para ver documento",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Usuario nao possui permissão para ver documento"
+                    }
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Endossos não encontrados"
+            "description": "Não foi localizado nenhum anexo para o nosnum",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Não foi localizado nenhum endosso para o nosnum."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1753,10 +2182,58 @@
                         }
                       ],
                       "contatos": [
-                        "Contatos do cliente"
+                        "Contatos adicionais do cliente"
                       ]
                     }
                   ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Usuario nao possui permissão para ver o cliente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Usuario nao possui permissão para ver o cliente."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Não foi localizado nenhum cliente com o código.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Não foi localizado nenhum cliente com o código xyz."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error."
+                    }
+                  }
                 }
               }
             }
@@ -1831,7 +2308,7 @@
                     "type": "string",
                     "nullable": true,
                     "description": "Grau de escolaridade do cliente (se aplicável).",
-                    "example": "Seperior"
+                    "example": "Superior"
                   },
                   "usuinc": {
                     "type": "integer",
@@ -1969,76 +2446,65 @@
         },
         "responses": {
           "201": {
-            "description": "Cliente cadastrado com sucesso",
+            "description": "Usuario inserido com sucesso.",
             "content": {
               "application/json": {
-                "example": {
-                  "codfil": 123,
-                  "nome": "Cliente Teste",
-                  "ativo": "T",
-                  "cpf_cnpj": "00000000000",
-                  "datanas": "01/01/1990",
-                  "pessoa": "F",
-                  "sexo": "M",
-                  "observacoes": "Teste API - Cliente Teste",
-                  "profissao": null,
-                  "estado_civil": 1,
-                  "escolaridade": null,
-                  "usuinc": 999,
-                  "enderecos": [
-                    {
-                      "tipo": "R",
-                      "logradouro": "Rua Teste, 123",
-                      "numero": 123,
-                      "complemento": "Apartamento 101",
-                      "bairro": "Bairro Teste",
-                      "cep": 12345678,
-                      "padrao": "T",
-                      "cidade": "Cidade Teste",
-                      "estado": "TS"
-                    },
-                    {
-                      "tipo": "C",
-                      "logradouro": "Avenida Teste, 456",
-                      "numero": null,
-                      "complemento": null,
-                      "bairro": "Centro",
-                      "cep": 87654321,
-                      "padrao": "F",
-                      "cidade": "Cidade Exemplo",
-                      "estado": "TE"
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "Codigo": {
+                      "type": "integer",
+                      "example": 123
                     }
-                  ],
-                  "emails": [
-                    {
-                      "email": "cliente1@teste.com",
-                      "padrao": "T"
-                    },
-                    {
-                      "email": "cliente2@teste.com",
-                      "padrao": "F"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Cpf/Cnpj duplicado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Cpf/Cnpj duplicado, não foi possível inserir cliente."
                     }
-                  ],
-                  "telefones": [
-                    {
-                      "tipo": "C",
-                      "ddd": 11,
-                      "numero": "999999999",
-                      "ramal": null,
-                      "padrao": "T",
-                      "codcon": null,
-                      "codemp": null
-                    },
-                    {
-                      "tipo": "E",
-                      "ddd": 11,
-                      "numero": "888888888",
-                      "ramal": null,
-                      "padrao": "F",
-                      "codcon": null,
-                      "codemp": null
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Usuario nao possui permissão",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Usuario nao possui permissão."
                     }
-                  ]
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error."
+                    }
+                  }
                 }
               }
             }
@@ -2074,7 +2540,84 @@
         ],
         "responses": {
           "200": {
-            "description": "Cliente excluído com sucesso"
+            "description": "Usuario deletado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Cliente deletado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Usuario nao possui permissão",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Usuario nao possui permissão."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Nenhum cliente encontrado com o código.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Nenhum cliente encontrado com o código 'xyz'."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Cliente com ligações.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Não foi possível excluir cliente, porque o mesmo possui ligações."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -2170,11 +2713,6 @@
             "required": false,
             "schema": {
               "type": "string",
-              "enum": [
-                "all",
-                "vigentes",
-                "nao_vigentes"
-              ],
               "example": "all"
             }
           },
@@ -2322,6 +2860,86 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Quantidade de caracteres inválida para a busca.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Quantidade de caracteres inválida para a busca."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token de autenticação inválido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Token de autenticação inválido."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Usuario nao possui permissão",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Usuário não possui permissão para ver clientes."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Nenhum cliente encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Nenhum cliente encontrado."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -2356,120 +2974,202 @@
         ],
         "responses": {
           "200": {
-            "description": "Cliente retornado com sucesso",
+            "description": "Cliente(s) retornado(s) com sucesso",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "cliente": {
+                    "header": {
                       "type": "object",
                       "properties": {
-                        "codfil": {
+                        "count": {
                           "type": "integer",
                           "example": 1
-                        },
-                        "codigo": {
-                          "type": "integer",
-                          "example": 123456
-                        },
-                        "nome": {
-                          "type": "string",
-                          "example": "CLIENTE TESTE"
-                        },
-                        "cpf_cnpj": {
-                          "type": "string",
-                          "example": "00000000000"
-                        },
-                        "datanas": {
-                          "type": "string",
-                          "nullable": true,
-                          "example": null
-                        },
-                        "sexo": {
-                          "type": "string",
-                          "example": ""
-                        },
-                        "cod_estado_civil": {
-                          "type": "integer",
-                          "nullable": true,
-                          "example": null
-                        },
-                        "estado_civil": {
-                          "type": "string",
-                          "nullable": true,
-                          "example": null
-                        },
-                        "emails": {
-                          "type": "array",
-                          "items": {
-                            "type": "object"
+                        }
+                      }
+                    },
+                    "cliente": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "codfil": {
+                            "type": "integer",
+                            "example": 1
                           },
-                          "example": []
-                        },
-                        "telefones": {
-                          "type": "array",
-                          "items": {
-                            "type": "object"
+                          "codigo": {
+                            "type": "integer",
+                            "example": 123456
                           },
-                          "example": []
-                        },
-                        "enderecos": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "codfil": {
-                                "type": "integer",
-                                "example": 1
-                              },
-                              "codigo": {
-                                "type": "integer",
-                                "example": 654321
-                              },
-                              "tipo": {
-                                "type": "string",
-                                "example": "R"
-                              },
-                              "logradouro": {
-                                "type": "string",
-                                "nullable": true,
-                                "example": null
-                              },
-                              "numero": {
-                                "type": "string",
-                                "nullable": true,
-                                "example": null
-                              },
-                              "complemento": {
-                                "type": "string",
-                                "nullable": true,
-                                "example": null
-                              },
-                              "bairro": {
-                                "type": "string",
-                                "nullable": true,
-                                "example": null
-                              },
-                              "cep": {
-                                "type": "string",
-                                "nullable": true,
-                                "example": null
-                              },
-                              "cidade": {
-                                "type": "string",
-                                "nullable": true,
-                                "example": null
-                              },
-                              "estado": {
-                                "type": "string",
-                                "nullable": true,
-                                "example": null
-                              },
-                              "padrao": {
-                                "type": "string",
-                                "example": "T"
+                          "nome": {
+                            "type": "string",
+                            "example": "CLIENTE TESTE 1"
+                          },
+                          "ativo": {
+                            "type": "string",
+                            "description": "T para ativo, F para inativo",
+                            "example": "T"
+                          },
+                          "cpf_cnpj": {
+                            "type": "string",
+                            "example": "12345678901"
+                          },
+                          "datanas": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "pessoa": {
+                            "type": "string",
+                            "description": "F para pessoa física, J para jurídica",
+                            "example": "F"
+                          },
+                          "sexo": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": ""
+                          },
+                          "email": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "telefone": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": ""
+                          },
+                          "cidade": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "estado": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "vigente": {
+                            "type": "boolean",
+                            "description": "true para vigente, false para não vigente",
+                            "example": false
+                          },
+                          "observacoes": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": "Cadastrado pela importação da Central de Negócios em 22/01/2025"
+                          },
+                          "profissao": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "cod_profissao": {
+                            "type": "integer",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "estado_civil": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "cod_estado_civil": {
+                            "type": "integer",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "escolaridade": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "cod_escolaridade": {
+                            "type": "integer",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "enderecos": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "codfil": {
+                                  "type": "integer",
+                                  "example": 1
+                                },
+                                "codigo": {
+                                  "type": "integer",
+                                  "example": 654321
+                                },
+                                "tipo": {
+                                  "type": "string",
+                                  "description": "Tipo de endereço (R para residencial, C para comercial, etc.)",
+                                  "example": "R"
+                                },
+                                "logradouro": {
+                                  "type": "string",
+                                  "nullable": true,
+                                  "example": null
+                                },
+                                "numero": {
+                                  "type": "string",
+                                  "nullable": true,
+                                  "example": null
+                                },
+                                "complemento": {
+                                  "type": "string",
+                                  "nullable": true,
+                                  "example": null
+                                },
+                                "bairro": {
+                                  "type": "string",
+                                  "nullable": true,
+                                  "example": null
+                                },
+                                "cep": {
+                                  "type": "string",
+                                  "nullable": true,
+                                  "example": null
+                                },
+                                "padrao": {
+                                  "type": "string",
+                                  "description": "T para endereço principal (padrão)",
+                                  "example": "T"
+                                },
+                                "cidade": {
+                                  "type": "string",
+                                  "nullable": true,
+                                  "example": null
+                                },
+                                "estado": {
+                                  "type": "string",
+                                  "nullable": true,
+                                  "example": null
+                                }
                               }
+                            }
+                          },
+                          "emails": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "example": {}
+                            }
+                          },
+                          "telefones": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "example": {}
+                            }
+                          },
+                          "contatos": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "example": {}
                             }
                           }
                         }
@@ -2480,33 +3180,115 @@
                 "examples": {
                   "clienteExemplo": {
                     "value": {
-                      "cliente": {
-                        "codfil": 1,
-                        "codigo": 123456,
-                        "nome": "CLIENTE TESTE",
-                        "cpf_cnpj": "00000000000",
-                        "datanas": null,
-                        "sexo": "",
-                        "cod_estado_civil": null,
-                        "estado_civil": null,
-                        "emails": [],
-                        "telefones": [],
-                        "enderecos": [
-                          {
-                            "codfil": 1,
-                            "codigo": 654321,
-                            "tipo": "R",
-                            "logradouro": null,
-                            "numero": null,
-                            "complemento": null,
-                            "bairro": null,
-                            "cep": null,
-                            "cidade": null,
-                            "estado": null,
-                            "padrao": "T"
-                          }
-                        ]
-                      }
+                      "header": {
+                        "count": 1
+                      },
+                      "cliente": [
+                        {
+                          "codfil": 1,
+                          "codigo": 123456,
+                          "nome": "CLIENTE TESTE 1",
+                          "ativo": "T",
+                          "cpf_cnpj": "12345678901",
+                          "datanas": null,
+                          "pessoa": "F",
+                          "sexo": "",
+                          "email": null,
+                          "telefone": "",
+                          "cidade": null,
+                          "estado": null,
+                          "vigente": false,
+                          "observacoes": "Cadastrado pela importação da Central de Negócios em 22/01/2025",
+                          "profissao": null,
+                          "cod_profissao": null,
+                          "estado_civil": null,
+                          "cod_estado_civil": null,
+                          "escolaridade": null,
+                          "cod_escolaridade": null,
+                          "enderecos": [
+                            {
+                              "codfil": 1,
+                              "codigo": 654321,
+                              "tipo": "R",
+                              "logradouro": null,
+                              "numero": null,
+                              "complemento": null,
+                              "bairro": null,
+                              "cep": null,
+                              "padrao": "T",
+                              "cidade": null,
+                              "estado": null
+                            }
+                          ],
+                          "emails": [],
+                          "telefones": [],
+                          "contatos": []
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Nenhum cliente encontrado com o cpf/cnpj informado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Nenhum cliente encontrado com o cpf/cnpj '123'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token de autenticação inválido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Token de autenticação inválido."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Usuario nao possui permissão",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Usuário não possui permissão para ver clientes."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error."
                     }
                   }
                 }
@@ -2546,7 +3328,97 @@
         ],
         "responses": {
           "200": {
-            "description": "Anexos do cliente encontrados"
+            "description": "Requisição bem-sucedida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": 1
+                        }
+                      }
+                    },
+                    "anexos": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "nome": {
+                            "type": "string",
+                            "example": "PDF TESTE GET ANEXO CLIENTE"
+                          },
+                          "tipo": {
+                            "type": "string",
+                            "example": ".pdf"
+                          },
+                          "url": {
+                            "type": "string",
+                            "example": "link aqui"
+                          },
+                          "indice_anexo": {
+                            "type": "integer",
+                            "example": 123
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Usuario nao possui permissão para ver cliente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Usuario nao possui permissão para ver cliente"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Não foi localizado nenhum anexo para o cliente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Nenhum anexo encontrado com o código xyz."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -2565,7 +3437,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example": "leonardo"
+              "example": "Teste"
             }
           }
         ],
@@ -2645,189 +3517,9 @@
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/busca_cpf": {
-      "get": {
-        "summary": "Buscar cliente por CPF",
-        "tags": [
-          "Cliente"
-        ],
-        "parameters": [
-          {
-            "name": "cpf_cnpj",
-            "in": "query",
-            "description": "CPF ou CNPJ do cliente",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "04030167039"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Cliente retornado com sucesso",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "cliente": {
-                      "type": "object",
-                      "properties": {
-                        "codfil": {
-                          "type": "integer",
-                          "example": 1
-                        },
-                        "codigo": {
-                          "type": "integer",
-                          "example": 123456
-                        },
-                        "nome": {
-                          "type": "string",
-                          "example": "CLIENTE TESTE"
-                        },
-                        "cpf_cnpj": {
-                          "type": "string",
-                          "example": "00000000000"
-                        },
-                        "datanas": {
-                          "type": "string",
-                          "nullable": true,
-                          "example": null
-                        },
-                        "sexo": {
-                          "type": "string",
-                          "example": ""
-                        },
-                        "cod_estado_civil": {
-                          "type": "integer",
-                          "nullable": true,
-                          "example": null
-                        },
-                        "estado_civil": {
-                          "type": "string",
-                          "nullable": true,
-                          "example": null
-                        },
-                        "emails": {
-                          "type": "array",
-                          "items": {
-                            "type": "object"
-                          },
-                          "example": []
-                        },
-                        "telefones": {
-                          "type": "array",
-                          "items": {
-                            "type": "object"
-                          },
-                          "example": []
-                        },
-                        "enderecos": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "codfil": {
-                                "type": "integer",
-                                "example": 1
-                              },
-                              "codigo": {
-                                "type": "integer",
-                                "example": 654321
-                              },
-                              "tipo": {
-                                "type": "string",
-                                "example": "R"
-                              },
-                              "logradouro": {
-                                "type": "string",
-                                "nullable": true,
-                                "example": null
-                              },
-                              "numero": {
-                                "type": "string",
-                                "nullable": true,
-                                "example": null
-                              },
-                              "complemento": {
-                                "type": "string",
-                                "nullable": true,
-                                "example": null
-                              },
-                              "bairro": {
-                                "type": "string",
-                                "nullable": true,
-                                "example": null
-                              },
-                              "cep": {
-                                "type": "string",
-                                "nullable": true,
-                                "example": null
-                              },
-                              "cidade": {
-                                "type": "string",
-                                "nullable": true,
-                                "example": null
-                              },
-                              "estado": {
-                                "type": "string",
-                                "nullable": true,
-                                "example": null
-                              },
-                              "padrao": {
-                                "type": "string",
-                                "example": "T"
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "clienteExemplo": {
-                    "value": {
-                      "cliente": {
-                        "codfil": 1,
-                        "codigo": 123456,
-                        "nome": "CLIENTE TESTE",
-                        "cpf_cnpj": "00000000000",
-                        "datanas": null,
-                        "sexo": "",
-                        "cod_estado_civil": null,
-                        "estado_civil": null,
-                        "emails": [],
-                        "telefones": [],
-                        "enderecos": [
-                          {
-                            "codfil": 1,
-                            "codigo": 654321,
-                            "tipo": "R",
-                            "logradouro": null,
-                            "numero": null,
-                            "complemento": null,
-                            "bairro": null,
-                            "cep": null,
-                            "cidade": null,
-                            "estado": null,
-                            "padrao": "T"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
-            }
           },
           "400": {
-            "description": "Requisição inválida",
+            "description": "Nenhum cliente encontrado.",
             "content": {
               "application/json": {
                 "schema": {
@@ -2835,7 +3527,55 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "Corpo da requisição inválido."
+                      "example": "Nenhum cliente encontrado."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token de autenticação inválido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Token de autenticação inválido."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Usuario nao possui permissão",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Usuário não possui permissão para ver clientes."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error."
                     }
                   }
                 }
@@ -2862,39 +3602,39 @@
                 "properties": {
                   "codcli": {
                     "type": "integer",
-                    "example": 123
+                    "example": 123456
                   },
                   "logradouro": {
                     "type": "string",
-                    "example": ""
+                    "example": "Rua Teste Exemplo"
                   },
                   "numero": {
                     "type": "integer",
-                    "example": 123
+                    "example": 100
                   },
                   "complemento": {
                     "type": "string",
-                    "example": ""
+                    "example": "Sala 02"
                   },
                   "bairro": {
                     "type": "string",
-                    "example": ""
+                    "example": "Bairro Teste"
                   },
                   "cep": {
                     "type": "string",
-                    "example": ""
+                    "example": "93510100"
                   },
                   "cidade": {
                     "type": "string",
-                    "example": ""
+                    "example": "Novo Hamburgo"
                   },
                   "estado": {
                     "type": "string",
-                    "example": ""
+                    "example": "RS"
                   },
                   "tipo": {
                     "type": "string",
-                    "example": ""
+                    "example": "R"
                   },
                   "padrao": {
                     "type": "string",
@@ -3444,7 +4184,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Cliente não encontrado",
+            "description": "E-mail deletado com sucesso",
             "content": {
               "application/json": {
                 "schema": {
@@ -3452,7 +4192,23 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "E-mail deletado"
+                      "example": "E-mail deletado."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Corpo da requisição inválido."
                     }
                   }
                 }
@@ -3520,7 +4276,7 @@
         },
         "responses": {
           "200": {
-            "description": "Renovações",
+            "description": "Telefone adicionado com sucesso",
             "content": {
               "application/json": {
                 "schema": {
@@ -3651,7 +4407,7 @@
         },
         "responses": {
           "200": {
-            "description": "Contato atualizado com sucesso",
+            "description": "Telefone atualizado com sucesso",
             "content": {
               "application/json": {
                 "schema": {
@@ -3752,7 +4508,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Cliente não encontrado",
+            "description": "Telefone deletado com sucesso",
             "content": {
               "application/json": {
                 "schema": {
@@ -3760,7 +4516,7 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "Telefone deletado"
+                      "example": "Telefone deletado."
                     }
                   }
                 }
@@ -3900,28 +4656,158 @@
         ],
         "responses": {
           "200": {
-            "description": "Sucesso ao retornar os negócios em andamento",
+            "description": "Sucesso - Lista de negócios retornada",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "codigo": {
-                        "type": "integer"
-                      },
-                      "status": {
-                        "type": "string"
-                      },
-                      "dtini": {
-                        "type": "string"
-                      },
-                      "dtfim": {
-                        "type": "string"
-                      },
-                      "texto": {
-                        "type": "string"
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": 23
+                        }
+                      }
+                    },
+                    "negocios": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "codfil": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "codigo": {
+                            "type": "integer",
+                            "example": 123
+                          },
+                          "codcli": {
+                            "type": "integer",
+                            "example": 123
+                          },
+                          "cliente": {
+                            "type": "string",
+                            "example": "CLIENTE EXEMPLO"
+                          },
+                          "status": {
+                            "type": "integer",
+                            "example": 0
+                          },
+                          "prioridade": {
+                            "type": "integer",
+                            "example": 3
+                          },
+                          "tipo": {
+                            "type": "integer",
+                            "example": 4
+                          },
+                          "tipo_neg": {
+                            "type": "string",
+                            "example": "CROSS S."
+                          },
+                          "ramo": {
+                            "type": "string",
+                            "example": "AUTO"
+                          },
+                          "sit_multi": {
+                            "type": "integer",
+                            "example": 0
+                          },
+                          "val_premio": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "val_c": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "doc_codfil": {
+                            "type": "integer",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "doc_nosnum": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "produto_fimvig": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "prox_aten_qtde_atrasadas": {
+                            "type": "integer",
+                            "example": 0
+                          },
+                          "prox_aten_codigo": {
+                            "type": "integer",
+                            "example": 470
+                          },
+                          "prox_aten_hora": {
+                            "type": "string",
+                            "example": "14:00:59"
+                          },
+                          "prox_aten_descricao": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "prox_aten_data": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "01/01/2025"
+                          },
+                          "codmulti": {
+                            "type": "integer",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "inivig": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "fimvig": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "descricao_item": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "situacao_multi": {
+                            "type": "string",
+                            "example": "-1"
+                          },
+                          "oportunidade": {
+                            "type": "integer",
+                            "example": 48
+                          },
+                          "codram": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "ramo_multi": {
+                            "type": "integer",
+                            "example": 31
+                          },
+                          "ramo_tipo": {
+                            "type": "string",
+                            "example": "V"
+                          },
+                          "multi_corp_mais": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          }
+                        }
                       }
                     }
                   }
@@ -3930,10 +4816,68 @@
             }
           },
           "400": {
-            "description": "Requisição inválida"
+            "description": "Quantidade de caracteres inválida para a busca.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Quantidade de caracteres inválida para a busca."
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
-            "description": "Não autorizado"
+            "description": "Token de autenticação inválido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Token de autenticação inválido."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Nenhum registro encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Nenhum registro encontrado."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -3953,7 +4897,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example": "01/01/2010"
+              "example": "01/01/2023"
             }
           },
           {
@@ -3973,7 +4917,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "example": "joaoas"
+              "example": "teste"
             }
           },
           {
@@ -4029,28 +4973,158 @@
         ],
         "responses": {
           "200": {
-            "description": "Sucesso ao retornar os negócios em cálculo",
+            "description": "Consulta realizada com sucesso",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "codigo": {
-                        "type": "integer"
-                      },
-                      "status": {
-                        "type": "string"
-                      },
-                      "dtini": {
-                        "type": "string"
-                      },
-                      "dtfim": {
-                        "type": "string"
-                      },
-                      "texto": {
-                        "type": "string"
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": 23
+                        }
+                      }
+                    },
+                    "negocios": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "codfil": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "codigo": {
+                            "type": "integer",
+                            "example": 48
+                          },
+                          "codcli": {
+                            "type": "integer",
+                            "example": 1002
+                          },
+                          "cliente": {
+                            "type": "string",
+                            "example": "CLIENTE EXEMPLO"
+                          },
+                          "status": {
+                            "type": "integer",
+                            "example": 0
+                          },
+                          "prioridade": {
+                            "type": "integer",
+                            "example": 3
+                          },
+                          "tipo": {
+                            "type": "integer",
+                            "example": 4
+                          },
+                          "tipo_neg": {
+                            "type": "string",
+                            "example": "CROSS S."
+                          },
+                          "ramo": {
+                            "type": "string",
+                            "example": "AUTO"
+                          },
+                          "sit_multi": {
+                            "type": "integer",
+                            "example": 0
+                          },
+                          "val_premio": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "val_c": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "doc_codfil": {
+                            "type": "integer",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "doc_nosnum": {
+                            "type": "integer",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "produto_fimvig": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "prox_aten_qtde_atrasadas": {
+                            "type": "integer",
+                            "example": 0
+                          },
+                          "prox_aten_codigo": {
+                            "type": "integer",
+                            "example": 470
+                          },
+                          "prox_aten_hora": {
+                            "type": "string",
+                            "example": "14:26:59"
+                          },
+                          "prox_aten_descricao": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "prox_aten_data": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "07/04/2025"
+                          },
+                          "codmulti": {
+                            "type": "integer",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "inivig": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "fimvig": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "descricao_item": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "situacao_multi": {
+                            "type": "string",
+                            "example": "-1"
+                          },
+                          "oportunidade": {
+                            "type": "integer",
+                            "example": 48
+                          },
+                          "codram": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "ramo_multi": {
+                            "type": "integer",
+                            "example": 31
+                          },
+                          "ramo_tipo": {
+                            "type": "string",
+                            "example": "V"
+                          },
+                          "multi_corp_mais": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          }
+                        }
                       }
                     }
                   }
@@ -4059,10 +5133,68 @@
             }
           },
           "400": {
-            "description": "Requisição inválida"
+            "description": "Quantidade de caracteres inválida para a busca.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Quantidade de caracteres inválida para a busca."
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
-            "description": "Não autorizado"
+            "description": "Token de autenticação inválido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Token de autenticação inválido."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Nenhum registro encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Nenhum registro encontrado."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -4157,28 +5289,129 @@
         ],
         "responses": {
           "200": {
-            "description": "Sucesso ao retornar os negócios finalizados",
+            "description": "Consulta realizada com sucesso",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "codigo": {
-                        "type": "integer"
-                      },
-                      "status": {
-                        "type": "string"
-                      },
-                      "dtini": {
-                        "type": "string"
-                      },
-                      "dtfim": {
-                        "type": "string"
-                      },
-                      "texto": {
-                        "type": "string"
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": 18
+                        }
+                      }
+                    },
+                    "negocios": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "codfil": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "codigo": {
+                            "type": "integer",
+                            "example": 2
+                          },
+                          "codcli": {
+                            "type": "integer",
+                            "example": 1001
+                          },
+                          "cliente": {
+                            "type": "string",
+                            "example": "CLIENTE EXEMPLO"
+                          },
+                          "status": {
+                            "type": "integer",
+                            "example": 21
+                          },
+                          "prioridade": {
+                            "type": "integer",
+                            "example": 3
+                          },
+                          "tipo": {
+                            "type": "integer",
+                            "example": 2
+                          },
+                          "tipo_neg": {
+                            "type": "string",
+                            "example": "RENOVAÇÃO"
+                          },
+                          "ramo": {
+                            "type": "string",
+                            "example": "AUTO"
+                          },
+                          "sit_multi": {
+                            "type": "integer",
+                            "example": -1
+                          },
+                          "val_premio": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 1234.56
+                          },
+                          "val_c": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 234.78
+                          },
+                          "doc_codfil": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "doc_nosnum": {
+                            "type": "integer",
+                            "example": 10001
+                          },
+                          "calc_fimvig_anterior": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "29/11/2024"
+                          },
+                          "prox_aten_qtde_atrasadas": {
+                            "type": "integer",
+                            "example": 0
+                          },
+                          "prox_aten_codigo": {
+                            "type": "integer",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "prox_aten_hora": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "prox_aten_descricao": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "prox_aten_data": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "07/01/2025"
+                          },
+                          "ramo_multi": {
+                            "type": "integer",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "ramo_tipo": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "multi_corp_mais": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          }
+                        }
                       }
                     }
                   }
@@ -4187,10 +5420,68 @@
             }
           },
           "400": {
-            "description": "Requisição inválida"
+            "description": "Quantidade de caracteres inválida para a busca.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Quantidade de caracteres inválida para a busca."
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
-            "description": "Não autorizado"
+            "description": "Token de autenticação inválido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Token de autenticação inválido."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Nenhum registro encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Nenhum registro encontrado."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -4226,22 +5517,43 @@
         ],
         "responses": {
           "200": {
-            "description": "Sucesso ao retornar os anexos do negócio",
+            "description": "Consulta realizada com sucesso",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "file_name": {
-                        "type": "string"
-                      },
-                      "file_type": {
-                        "type": "string"
-                      },
-                      "file_size": {
-                        "type": "integer"
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": 1
+                        }
+                      }
+                    },
+                    "negocio_anexos": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "nome": {
+                            "type": "string",
+                            "example": "EXEMPLO PDF"
+                          },
+                          "tipo": {
+                            "type": "string",
+                            "example": ".pdf"
+                          },
+                          "url": {
+                            "type": "string",
+                            "example": "https://example.com/secure-url"
+                          },
+                          "indice_anexo": {
+                            "type": "integer",
+                            "example": 123
+                          }
+                        }
                       }
                     }
                   }
@@ -4249,11 +5561,53 @@
               }
             }
           },
-          "400": {
-            "description": "Requisição inválida"
+          "403": {
+            "description": "Usuario nao possui permissão para ver negociação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Usuario nao possui permissão para ver negociação"
+                    }
+                  }
+                }
+              }
+            }
           },
-          "401": {
-            "description": "Não autorizado"
+          "404": {
+            "description": "Não foi localizado nenhum anexo para a negociação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Não foi localizado nenhum anexo para a negociação."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -4289,37 +5643,217 @@
         ],
         "responses": {
           "200": {
-            "description": "Sucesso ao retornar o negócio",
+            "description": "Sucesso na consulta de negócio",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "codigo": {
-                      "type": "integer"
+                    "header": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": 1
+                        }
+                      }
                     },
-                    "status": {
-                      "type": "string"
-                    },
-                    "dtini": {
-                      "type": "string"
-                    },
-                    "dtfim": {
-                      "type": "string"
-                    },
-                    "texto": {
-                      "type": "string"
+                    "negocio": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "codigo": {
+                            "type": "integer",
+                            "example": 2
+                          },
+                          "codfil": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "cliente": {
+                            "type": "string",
+                            "example": "CLIENTE EXEMPLO"
+                          },
+                          "codram": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "codcli": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "numero_ddd": {
+                            "type": "integer",
+                            "example": 11
+                          },
+                          "numero_fone": {
+                            "type": "string",
+                            "example": "123456789"
+                          },
+                          "cpf_cnpj": {
+                            "type": "string",
+                            "example": "00000000000000"
+                          },
+                          "email": {
+                            "type": "string",
+                            "example": "exemplo@email.com"
+                          },
+                          "ramo": {
+                            "type": "string",
+                            "example": "AUTOMOVEL"
+                          },
+                          "produto_ja_possui": {
+                            "type": "string",
+                            "example": "T"
+                          },
+                          "produto_codfil": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "produto_nosnum": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "produto_fimvig": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "31/12/2024"
+                          },
+                          "produto_seguradora": {
+                            "type": "string",
+                            "example": "SEGURADORA EXEMPLO"
+                          },
+                          "prioridade": {
+                            "type": "integer",
+                            "example": 3
+                          },
+                          "status": {
+                            "type": "integer",
+                            "example": 21
+                          },
+                          "val_premio": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 1234.56
+                          },
+                          "val_c": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 123.46
+                          },
+                          "situacao_multi": {
+                            "type": "string",
+                            "example": "-1"
+                          },
+                          "oportunidade": {
+                            "type": "integer",
+                            "example": 2
+                          },
+                          "ramo_multi": {
+                            "type": "integer",
+                            "example": 31
+                          },
+                          "ramo_tipo": {
+                            "type": "string",
+                            "example": "V"
+                          },
+                          "atendimentos": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "codigo": {
+                                  "type": "integer",
+                                  "example": 10
+                                },
+                                "codfil": {
+                                  "type": "integer",
+                                  "example": 1
+                                },
+                                "codopo": {
+                                  "type": "integer",
+                                  "example": 2
+                                },
+                                "tipo_atendimento": {
+                                  "type": "string",
+                                  "example": "O"
+                                },
+                                "data": {
+                                  "type": "string",
+                                  "format": "date",
+                                  "example": "01/01/2024"
+                                },
+                                "hora": {
+                                  "type": "string",
+                                  "example": "12:00:00"
+                                },
+                                "canal": {
+                                  "type": "integer",
+                                  "example": 2
+                                },
+                                "datinc": {
+                                  "type": "string",
+                                  "example": "01/01/2024 12:00:00"
+                                },
+                                "usuinc": {
+                                  "type": "string",
+                                  "example": "USUARIO1"
+                                },
+                                "descricao": {
+                                  "type": "string",
+                                  "nullable": true
+                                },
+                                "realizado": {
+                                  "type": "string",
+                                  "example": "T"
+                                },
+                                "tipo": {
+                                  "type": "string",
+                                  "example": "1 - INCLUSÃO"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "400": {
-            "description": "Requisição inválida"
+          "404": {
+            "description": "Nenhum negócio encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Nenhum negócio encontrado."
+                    }
+                  }
+                }
+              }
+            }
           },
-          "401": {
-            "description": "Não autorizado"
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -4456,7 +5990,24 @@
         },
         "responses": {
           "201": {
-            "description": "Negócio criado ou atualizado com sucesso"
+            "description": "Negócio inserido com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Negócio inserido."
+                    },
+                    "codigo_negocio": {
+                      "type": "integer",
+                      "example": 52
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "Erro na criação ou atualização do negócio"
@@ -4478,18 +6029,46 @@
           {
             "name": "texto",
             "in": "query",
-            "description": "Texto que pode ser utilizado ou não",
+            "description": "Texto de busca que pode ser utilizado ou não",
             "required": false,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Lista de agentes",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
+            "description": "Lista de agentes retornada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": 1
+                        }
+                      }
+                    },
+                    "agentes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "codigo": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "nome": {
+                            "type": "string",
+                            "example": "AGENTE 1"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -4521,11 +6100,39 @@
         ],
         "responses": {
           "200": {
-            "description": "Lista de produtores encontrados",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
+            "description": "Lista de produtores retornada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": 1
+                        }
+                      }
+                    },
+                    "produtores": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "codigo": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "nome": {
+                            "type": "string",
+                            "example": "PRODUTOR 1"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -4557,11 +6164,161 @@
         ],
         "responses": {
           "200": {
-            "description": "Documentos encontrados",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
+            "description": "Sucesso na obtenção dos dados de produtores por documento",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": 1
+                        }
+                      }
+                    },
+                    "prod_docs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "codfil": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "nosnum": {
+                            "type": "integer",
+                            "example": 50
+                          },
+                          "codage": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "codpro": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "perpart": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 100
+                          },
+                          "indireto": {
+                            "type": "string",
+                            "example": "F"
+                          },
+                          "ordem": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "datrep_prot": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "campo_base_r": {
+                            "type": "integer",
+                            "example": 5
+                          },
+                          "base_r": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 19.92
+                          },
+                          "per_r": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "val_r": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "forma_repasse_r": {
+                            "type": "integer",
+                            "example": 5
+                          },
+                          "campo_base_rc": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "base_rc": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "per_rc": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "val_rc": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "forma_repasse_rc": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "campo_base_ra": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "val_ra": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "campo_base_rp": {
+                            "type": "integer",
+                            "example": 0
+                          },
+                          "base_rp": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "per_rp": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "val_rp": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "forma_repasse_rp": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "cod_com_ind": {
+                            "type": "integer",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "taxa_repasse": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "nome_agente": {
+                            "type": "string",
+                            "example": "MATRIZ"
+                          },
+                          "nome_produtor": {
+                            "type": "string",
+                            "example": "PRODUTOR PADRÃO"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -4616,7 +6373,20 @@
         ],
         "responses": {
           "201": {
-            "description": "Documento de produção criado com sucesso"
+            "description": "Produtor inserido com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Produtor inserido."
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "Erro na criação do documento"
@@ -4664,11 +6434,164 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Documento de produção atualizado com sucesso"
+          "201": {
+            "description": "Lista de produtores vinculados ao documento",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "prod_docs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "codfil": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "nosnum": {
+                            "type": "integer",
+                            "example": 50
+                          },
+                          "codage": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "codpro": {
+                            "type": "integer",
+                            "example": 6
+                          },
+                          "perpart": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 100
+                          },
+                          "indireto": {
+                            "type": "string",
+                            "example": "T"
+                          },
+                          "ordem": {
+                            "type": "integer",
+                            "example": 2
+                          },
+                          "datrep_prot": {
+                            "type": "string",
+                            "format": "date-time",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "campo_base_r": {
+                            "type": "integer",
+                            "example": 5
+                          },
+                          "base_r": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 19.92
+                          },
+                          "per_r": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 10
+                          },
+                          "val_r": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 1.99
+                          },
+                          "forma_repasse_r": {
+                            "type": "integer",
+                            "example": 5
+                          },
+                          "campo_base_rc": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "base_rc": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "per_rc": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "val_rc": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "forma_repasse_rc": {
+                            "type": "integer",
+                            "example": 5
+                          },
+                          "campo_base_ra": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "val_ra": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "campo_base_rp": {
+                            "type": "integer",
+                            "example": 0
+                          },
+                          "base_rp": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "per_rp": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "val_rp": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "forma_repasse_rp": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "cod_com_ind": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "taxa_repasse": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
-          "400": {
-            "description": "Erro na atualização do documento"
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -4705,10 +6628,36 @@
         ],
         "responses": {
           "200": {
-            "description": "Documento de produção removido com sucesso"
+            "description": "Produtor deletado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Produtor deletado."
+                    }
+                  }
+                }
+              }
+            }
           },
-          "400": {
-            "description": "Erro ao remover o documento"
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -4723,11 +6672,43 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Lista de Ramos encontrados",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
+            "description": "Lista de ramos retornada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": 1
+                        }
+                      }
+                    },
+                    "ramos": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "codigo": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "nome": {
+                            "type": "string",
+                            "example": "AUTOMOVEL"
+                          },
+                          "abreviatura": {
+                            "type": "string",
+                            "example": "AUTO"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -4752,11 +6733,43 @@
         ],
         "responses": {
           "200": {
-            "description": "Lista de Ramos encontrados com base no telefone",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
+            "description": "Lista de ramos retornada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": 1
+                        }
+                      }
+                    },
+                    "ramos": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "codigo": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "nome": {
+                            "type": "string",
+                            "example": "AUTOMOVEL"
+                          },
+                          "abreviatura": {
+                            "type": "string",
+                            "example": "AUTO"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -4847,10 +6860,36 @@
             }
           },
           "400": {
-            "description": "Parâmetros de consulta inválidos"
+            "description": "Nenhum sinistro encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Nenhum sinistro encontrado."
+                    }
+                  }
+                }
+              }
+            }
           },
-          "404": {
-            "description": "Sinistros não encontrados"
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -4894,31 +6933,143 @@
         ],
         "responses": {
           "200": {
-            "description": "Lista de documentos BI encontrados",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "integer"
-                  },
-                  "tipo_doc": {
-                    "type": "string"
-                  },
-                  "data_doc": {
-                    "type": "string",
-                    "format": "date"
+            "description": "Lista de documentos retornada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": 55
+                        }
+                      }
+                    },
+                    "documentos": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "codfil": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "nosnum": {
+                            "type": "integer",
+                            "example": 194
+                          },
+                          "codcli": {
+                            "type": "integer",
+                            "example": 39
+                          },
+                          "cliente": {
+                            "type": "string",
+                            "example": "CLIENTE OCULTO",
+                            "description": "Nome do cliente ocultado por questões de privacidade"
+                          },
+                          "seguradora": {
+                            "type": "string",
+                            "example": "SEGURADORA OCULTA",
+                            "description": "Nome da seguradora ocultado por questões de privacidade"
+                          },
+                          "ramo": {
+                            "type": "string",
+                            "example": "FROT"
+                          },
+                          "inivig": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "25/02/2025"
+                          },
+                          "numpar": {
+                            "type": "integer",
+                            "example": 12
+                          },
+                          "preliq": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "pretot": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "base_c": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "val_c": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "val_cp": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0
+                          },
+                          "numapo": {
+                            "type": "string",
+                            "example": "XXXX",
+                            "description": "Número da apólice oculto por questões de privacidade"
+                          },
+                          "numend": {
+                            "type": "string",
+                            "example": "XXXX",
+                            "description": "Número do endereço oculto por questões de privacidade"
+                          },
+                          "nosnum_ren": {
+                            "type": "integer",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "datpro": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "25/02/2025"
+                          },
+                          "fimvig": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "25/02/2026"
+                          },
+                          "datalt": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "25/02/2025"
+                          },
+                          "sit_sinistro": {
+                            "type": "integer",
+                            "example": 0
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }
             }
           },
-          "400": {
-            "description": "Parâmetros de consulta inválidos"
-          },
           "404": {
-            "description": "Documentos BI não encontrados"
+            "description": "Não há documentos para exibir.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Não há documentos para exibir."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
